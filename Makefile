@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/02/08 18:29:19 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/02/10 17:13:32 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,9 @@ SRC = so_long.c \
 		render_image.c \
 		window.c \
 		utils.c \
-		check_map.c
+		check_map.c \
+		check_map_2.c \
+		get_next_line.c
 SRC2 = $(addprefix $(SRC_PATH), $(SRC))
 
 
@@ -49,7 +51,6 @@ INC = -I ./includes/ \
 		-I ./mlx_linux/
 
 HDR = includes/so_long.h \
-		includes/get_next_line.h \
 		mlx_linux/mlx.h \
 		mlx_linux/mlx_int.h
 
@@ -65,14 +66,6 @@ LIBFT = $(LIBFT_PATH)/libft.a
 MLX_PATH = mlx_linux/
 MLX = $(MLX_PATH)/libmlx.a
 MLX_FLAGS = -L/mlx_linux -lXext -lX11 -lm -lz
-
-
-######################## GNL ########################
-
-GNL_PATH = get_next_line/
-GNL = get_next_line.c \
-		get_next_line_utils.c
-GNL_OBJ = ${addprefix ${GNL_PATH}, ${GNL:.c=.o}}
 
 
 ############## FONT COLORS AND EFFECTS ##############
@@ -107,9 +100,9 @@ $(MLX):
 	@make -sC $(MLX_PATH)
 	@echo "$(_GREEN)\n✅ MiniLibX compiled\n${_END}"
 
-$(NAME): $(OBJ2) $(GNL_OBJ)
+$(NAME): $(OBJ2)
 	@echo "$(_GREY)\nCompiling So_long...${_END}"
-	@$(CCF) $(OBJ2) $(GNL_OBJ) $(LIBFT) $(MLX) $(MLX_FLAGS) $(INC) -o $(NAME)
+	@$(CCF) $(OBJ2) $(LIBFT) $(MLX) $(MLX_FLAGS) $(INC) -o $(NAME)
 	@echo "$(_GREEN)\n✅ So_long compiled\n${_END}"
 	@echo "$(_GREEN)\n🆗🕺 READY 🕺🆗\n${_END}"
 

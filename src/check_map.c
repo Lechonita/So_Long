@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:33:06 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/08 18:23:22 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:36:12 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,99 +19,72 @@ void	check_map_file(char *argv)
 	if (!argv)
 		return ;
 	i = ft_strlen(argv) - 1;
-	if (argv[i] != "r" || argv[i - 1] != "e" || argv[i - 2] != "b"
-		|| argv[i - 3] != ".")
+	if (argv[i] != 'r' || argv[i - 1] != 'e' || argv[i - 2] != 'b'
+		|| argv[i - 3] != '.')
 		exit_error (ERROR_MAP_FILE);
 }
 
-void	check_map_chars(int fd)
+void	map_error_elements(t_data **data)
 {
-	char	*line;
-	int		e;
-	int		c;
-	int		p;
+	int	y;
 
-	line = get_next_line(fd);
-	while (line)
+	y = -1;
+	while ((*data)->map[++y])
+		free((*data)->map[y]);
+	free((*data)->map);
+	exit_error(ERROR_MAP_ELEMENTS);
+}
+
+void	check_map_chars(t_data **data)
+{
+	t_map	map;
+
+	map.c = 0;
+	map.e = 0;
+	map.p = 0;
+	map.y = count_map_lines((*data)->map) - 1;
+	while (map.y)
 	{
-		if (strchr("E", line))
-			e += 1;
-		if (strchr("C", line))
-			c += 1;
-		if (strchr("P", line))
-			p += 1;
-		if (!strchr("01CEP", line))
-			exit_error(ERROR_MAP_ELEMENTS);
-		free(line);
-		line = get_next_line(fd);
+		map.x = 0;
+		while ((*data)->map[map.y][map.x])
+		{
+			if ((*data)->map[map.y][map.x] == 'C')
+				map.c += 1;
+			else if ((*data)->map[map.y][map.x] == 'E')
+				map.e += 1;
+			else if ((*data)->map[map.y][map.x] == 'P')
+				map.p += 1;
+			else if ((*data)->map[map.y][map.x] != '1'
+				&& (*data)->map[map.y][map.x] != '0')
+				map_error_elements(data);
+			map.x++;
+		}
+		map.y--;
 	}
-	free(line);
-	if (e != 1 || p != 1 || !c)
+	printf("map.c = %d\n", map.c);
+	printf("map.e = %d\n", map.e);
+	printf("map.p = %d\n", map.p);
+	if (!map.c || map.e != 1 || map.p != 1)
 		exit_error (ERROR_MAP_ECP);
 }
 
-void	check_map_edges(int fd)
+int	count_map_lines(char **map)
 {
-	char	*line;
-	int		len;
+	int		count;
 
-	line = get_next_line(fd);
-	while (line)
-	{
-		len = ft_strlen(line);
-		if (line[0] != "1" || line[len - 1] != "1")
-			exit_error(ERROR_MAP_EDGES);
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
+	count = 0;
+	while (map[count])
+		count++;
+	return (count);
 }
 
-void	check_map_top_bottom(int fd, int count_lines)
+void	check_map(t_data *data)
 {
-	char	*line;
-	int		i;
-	int		j;
-
-	i = -1;
-	j = 1;
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (j == 1 || j == count_lines)
-		{
-			while (line[++i])
-			{
-				if (line[i] != "1")
-					exit_error(ERROR_MAP_TOP_BOTTOM);
-			}
-		}
-		j++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
-}
-
-void	check_map(t_data data, int argc, char *argv)
-{
-	int		fd;
-	char	*line;
 	int		count_lines;
 
-	check_map_file(argv);
-	fd = open(argv[argc -1], O_RDONLY);
-	if (!fd)
-		return ;
-	line = get_next_line(fd);
-	while (line)
-	{
-		count_lines += 1;
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
-	check_map_chars(fd);
-	check_map_edges(fd);
-	check_map_top_bottom(fd, count_lines);
+	count_lines = count_map_lines(data->map);
+	printf("count lines = %d\n", count_lines);
+	// check_map_chars(&data);
+	// check_map_edges(&data);
+	// check_map_top_bottom(&data, count_lines);
 }
