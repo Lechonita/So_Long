@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/11 17:36:37 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:48:36 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #  define BUFFER_SIZE BUFSIZ
 # endif
 
-# define TITLE "TBD"
+# define TITLE "So Long Suckers"
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 
@@ -44,11 +44,13 @@
 # define ERROR_NO_MAP "Error\n >> No map has been selected\n"
 # define ERROR_MAP_FILE "Error\n >> Map file type is incorrect\n"
 # define ERROR_MAP_ELEMENTS "Error\n >> Wrong map element found (!01CEP)\n"
-# define ERROR_MAP_ECP "Error\n >> Wrong quantity of Start,Exit and/or Item\n"
-# define ERROR_MAP_EDGES "Error\n >> Map edges are invalid\n"
-# define ERROR_MAP_TOP_BOTTOM "Error\n >> Map top or bottom edge is invalid\n"
+# define ERROR_MAP_ECP "Error\n >> Wrong quantity of Start, Exit and/or Item\n"
+# define ERROR_MAP_WALLS "Error\n >> Map walls are incomplete\n"
 # define ERROR_MAP_FD "Error\n >> Map file could not be opened\n"
 # define ERROR_MAP_EMPTY "Error\n >> Map file is empty\n"
+# define ERROR_MAP_SHAPE "Error\n >> Map is not rectangular\n"
+# define ERROR_MAP_COPY "Error\n >> Map could not be copied\n"
+# define ERROR_INVALID_ROUTE "Error\n >> This map has no possible path\n"
 
 typedef struct s_img
 {
@@ -62,7 +64,7 @@ typedef struct s_img
 typedef struct s_win
 {
 	int		x;
-	int		y;	
+	int		y;
 } t_win;
 
 typedef struct s_data
@@ -70,6 +72,7 @@ typedef struct s_data
 	void	*mlx_ptr;
 	void	*win_ptr;
 	char	**map;
+	char	**map_copy;
 	t_img	img;
 	t_win	win;
 }	t_data;
@@ -114,14 +117,27 @@ void	exit_error(char *error_message);
 
 /* CHECK MAP */
 void	check_map(t_data *data);
-// void	check_map_top_bottom(t_data *data, int count_lines);
-// void	check_map_edges(t_data *data);
+int		check_map_top_bottom(t_data **data, int count_lines);
+void	check_map_walls(t_data **data, int count_lines);
 void	map_error_elements(t_data **data);
 void	check_map_chars(t_data **data);
 void	check_map_file(char *argv);
 int		count_map_lines(char **map);
+void	check_map_shape(t_data **data, int count_lines);
 
-char	**get_map(char *map_doc);
+char	**get_map(char *map_filename);
+
+/* VALID MAP ROUTE */
+void	check_map_valid_path(t_data **data, int count_lines);
+void	copy_map(t_data **data, int y);
+void	flood_map(t_data **data, int y, int x);
+int		find_py(t_data **data);
+int		find_px(t_data **data);
+
+/* VALID MAP ROUTE 2 */
+void	flood_x(t_data **data, int x, int y);
+void	flood_y(t_data **data, int x, int y);
+int		is_path_valid(t_data *data, int count_lines);
 
 /* GNL */
 char	*ft_free_strjoin(char *s1, char *s2);

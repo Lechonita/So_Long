@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:33:06 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/11 17:36:12 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/15 14:59:34 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	check_map_chars(t_data **data)
 	map.e = 0;
 	map.p = 0;
 	map.y = count_map_lines((*data)->map) - 1;
-	while (map.y)
+	while ((*data)->map[map.y] && map.y >= 0)
 	{
 		map.x = 0;
 		while ((*data)->map[map.y][map.x])
@@ -61,9 +61,9 @@ void	check_map_chars(t_data **data)
 		}
 		map.y--;
 	}
-	printf("map.c = %d\n", map.c);
-	printf("map.e = %d\n", map.e);
-	printf("map.p = %d\n", map.p);
+	// printf("map.c = %d\n", map.c);
+	// printf("map.e = %d\n", map.e);
+	// printf("map.p = %d\n", map.p);
 	if (!map.c || map.e != 1 || map.p != 1)
 		exit_error (ERROR_MAP_ECP);
 }
@@ -83,8 +83,8 @@ void	check_map(t_data *data)
 	int		count_lines;
 
 	count_lines = count_map_lines(data->map);
-	printf("count lines = %d\n", count_lines);
-	// check_map_chars(&data);
-	// check_map_edges(&data);
-	// check_map_top_bottom(&data, count_lines);
+	check_map_shape(&data, count_lines);
+	check_map_chars(&data);
+	check_map_walls(&data, count_lines);
+	check_map_valid_path(&data, count_lines);
 }

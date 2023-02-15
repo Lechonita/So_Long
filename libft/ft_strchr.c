@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 12:18:36 by jrouillo          #+#    #+#             */
-/*   Updated: 2022/11/16 12:09:53 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/13 17:14:34 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 char	*ft_strchr(const char *s, int c)
 {
+	if (!s)
+		return (NULL);
 	while (*s != (char)c && *s)
 		s++;
 	if (*s == (char)c)

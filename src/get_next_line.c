@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:49:42 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/10 17:07:53 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/13 17:15:48 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*get_line_store(char *str)
 		*(str - i) = *str;
 		str++;
 	}
-	*str = '\0';
+	*(str - i) = '\0';
 	return (line);
 }
 
@@ -88,18 +88,17 @@ char	*get_str(int fd, char *str)
 	if (!buf)
 		return (NULL);
 	tmp = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!tmp)
+		return (free(buf), NULL);
 	ft_memcpy(tmp, str, ft_strlen(str) + 1);
 	while (nbyte > 0)
 	{
 		nbyte = read(fd, buf, BUFFER_SIZE);
 		if (nbyte < 0)
-		{
-			free(buf);
-			return (NULL);
-		}
+			return (free(buf), free(tmp), NULL);
 		buf[nbyte] = '\0';
 		tmp = ft_free_strjoin(tmp, buf);
-		if (ft_strchr(tmp, '\n'))
+		if (ft_strchr(tmp, '\n') || !tmp)
 			break ;
 	}
 	free(buf);

@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/02/10 17:13:32 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/02/15 10:35:49 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ SRC = so_long.c \
 		utils.c \
 		check_map.c \
 		check_map_2.c \
+		check_map_valid_route.c \
+		check_map_valid_route_2.c \
 		get_next_line.c
 SRC2 = $(addprefix $(SRC_PATH), $(SRC))
 
@@ -40,8 +42,8 @@ OBJ2 = $(addprefix $(OBJ_PATH), $(OBJ))
 
 ####################### FLAGS #######################
 
-CCF  = cc $(FLAGS)
-FLAGS = -Wall -Werror -Wextra -fsanitize=address,undefined -g2
+CCF  = clang $(FLAGS)
+FLAGS = -Wall -Werror -Wextra -g
 
 
 ###################### INCLUDE ######################
@@ -105,6 +107,9 @@ $(NAME): $(OBJ2)
 	@$(CCF) $(OBJ2) $(LIBFT) $(MLX) $(MLX_FLAGS) $(INC) -o $(NAME)
 	@echo "$(_GREEN)\n✅ So_long compiled\n${_END}"
 	@echo "$(_GREEN)\n🆗🕺 READY 🕺🆗\n${_END}"
+
+malloc_test: $(OBJ_PATH) $(OBJ2) $(LIBFT) $(MLX) $(NAME)
+	$(CCF) -fsanitize=undefined -rdynamic -o $@ ${OBJ2} $(LIBFT) $(INC) -L. -lmallocator
 
 clean:
 	@make clean -sC $(LIBFT_PATH)

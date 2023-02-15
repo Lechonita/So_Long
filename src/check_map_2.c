@@ -6,75 +6,101 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 17:13:47 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/11 16:30:27 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:22:41 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	check_map_edges(int fd)
+void	check_map_walls(t_data **data, int count_lines)
 {
-	char	*line;
-	int		len;
+	t_map	map;
 
-	line = get_next_line(fd);
-	while (line)
+	map.y = count_lines - 1;
+	while (map.y >= 0)
 	{
-		len = ft_strlen(line);
-		if (line[0] != '1' || line[len - 1] != '1')
-			exit_error(ERROR_MAP_EDGES);
-		free(line);
-		line = get_next_line(fd);
+		// printf("(*data)->map[map.y][0] = %d\n", (*data)->map[map.y][0]);
+		if ((*data)->map[map.y][0] != '1'
+			|| (*data)->map[map.y][ft_strlen((*data)->map[map.y]) - 1] != '1')
+			exit_error(ERROR_MAP_WALLS);
+		map.y--;
 	}
-	free(line);
+	if (check_map_top_bottom(data, count_lines))
+		exit_error(ERROR_MAP_WALLS);
 }
 
-void	check_map_top_bottom(int fd, int count_lines)
+int	check_map_top_bottom(t_data **data, int count_lines)
 {
-	char	*line;
-	int		i;
-	int		j;
+	t_map	map;
 
-	i = -1;
-	j = 1;
-	line = get_next_line(fd);
-	while (line)
+	map.y = count_lines - 1;
+	map.x = 0;
+	while ((*data)->map[0][map.x])
 	{
-		if (j == 1 || j == count_lines)
-		{
-			while (line[++i])
-			{
-				if (line[i] != '1')
-					exit_error(ERROR_MAP_TOP_BOTTOM);
-			}
-		}
-		j++;
-		free(line);
-		line = get_next_line(fd);
+		if ((*data)->map[0][map.x] != '1')
+			return (1);
+		map.x++;
 	}
-	free(line);
+	map.x = 0;
+	while ((*data)->map[map.y][map.x])
+	{
+		if ((*data)->map[map.y][map.x] != '1')
+			return (1);
+		map.x++;
+	}
+	return (0);
 }
 
-char	**get_map(char *map_doc)
+char	**get_map(char *map_filename)
 {
 	int		fd;
 	char	*line;
 	char	*map_lines;
+	char	**map;
+	// char	*map_filepath;
 
-	fd = (map_doc, O_RDONLY);
+	// map_filepath = ft_strjoin("maps/", map_filename);
+	fd = open(map_filename, O_RDONLY);
 	if (fd < 0)
 		exit_error(ERROR_MAP_FD);
 	line = get_next_line(fd);
-	map_lines = ft_strdup("");
+	map_lines = ft_calloc(1, 1);
+	if (!map_lines)
+		return (NULL);
 	while (line)
 	{
-		map_lines = ft_strjoin(map_lines, line);
+		map_lines = ft_free_strjoin(map_lines, line);
+		if (!map_lines)
+			return (NULL);
+		// printf("%s", line);
 		free(line);
 		line = get_next_line(fd);
 	}
-	free(line);
 	close(fd);
 	if (map_lines[0] == '\0')
 		exit_error(ERROR_MAP_EMPTY);
-	return (ft_split(map_lines, '\n'));
+	map = ft_split(map_lines, '\n');
+	return (free(map_lines), map);
+}
+
+void	check_map_shape(t_data **data, int count_lines)
+{
+	t_map	map;
+	int		tmp;
+
+	map.y = 0;
+	map.x = 0;
+	tmp = 0;
+	while (map.y < count_lines)
+	{
+		map.x = ft_strlen((*data)->map[map.y]) - 1;
+		if (tmp != 0)
+		{
+			if (tmp != map.x)
+				exit_error(ERROR_MAP_SHAPE);
+		}
+		else
+			tmp = map.x;
+		map.y++;
+	}
 }
