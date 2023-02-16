@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:55 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/15 16:10:03 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:00:56 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,13 @@ int	main(int argc, char **argv)
 		return (0);
 	if (argc < 2)
 		exit_error (ERROR_ARGC);
-	check_map_file(argv[1]);
-	data->map = get_map(argv[1]);
-	// printf("map[y] = %s\n", data->map[4]);
+	map_filename(argv[1]);
+	data->map = get_map(data, argv[1]);
 	if (!data->map)
 		exit_error(ERROR_MAP_EMPTY);
 	check_map(data);
+	free_both_maps(data);
 
-	int i;
-	i = 0;
-	while (data->map[i])
-		free(data->map[i++]);
-	free(data->map);
-	free(data);
 	
 	// data.mlx_ptr = mlx_init();
 	// if (!data.mlx_ptr)

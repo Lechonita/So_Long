@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/15 15:48:36 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:11:18 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 # define ERROR_MAP_WALLS "Error\n >> Map walls are incomplete\n"
 # define ERROR_MAP_FD "Error\n >> Map file could not be opened\n"
 # define ERROR_MAP_EMPTY "Error\n >> Map file is empty\n"
-# define ERROR_MAP_SHAPE "Error\n >> Map is not rectangular\n"
+# define ERROR_MAP_SHAPE "Error\n >> Map shape incorrect\n"
 # define ERROR_MAP_COPY "Error\n >> Map could not be copied\n"
 # define ERROR_INVALID_ROUTE "Error\n >> This map has no possible path\n"
 
@@ -73,6 +73,8 @@ typedef struct s_data
 	void	*win_ptr;
 	char	**map;
 	char	**map_copy;
+	int		height;
+	int		width;
 	t_img	img;
 	t_win	win;
 }	t_data;
@@ -110,34 +112,37 @@ void	img_pix_put(t_img *img, int x, int y, int color);
 int		render(t_data *data);
 
 /* WINDOW */
-// void	init_window(t_data data);
+void	init_window(t_data data);
 
 /* UTILS */
 void	exit_error(char *error_message);
 
-/* CHECK MAP */
-void	check_map(t_data *data);
-int		check_map_top_bottom(t_data **data, int count_lines);
-void	check_map_walls(t_data **data, int count_lines);
-void	map_error_elements(t_data **data);
-void	check_map_chars(t_data **data);
-void	check_map_file(char *argv);
-int		count_map_lines(char **map);
-void	check_map_shape(t_data **data, int count_lines);
+/* INIT MAP */
+void	map_filename(char *argv);
+int		get_width(t_data **data);
+int		get_height(char *map_filename);
+char	**get_map(t_data *data, char *map_filename);
 
-char	**get_map(char *map_filename);
+/* CHECK MAP */
+void	map_error_elements(t_data *data);
+void	check_map_chars(t_data **data);
+void	check_map_shape(t_data **data);
+void	check_map(t_data *data);
+
+/* CHECK MAP WALLS */
+void	check_map_walls(t_data **data);
+int		check_map_top_bottom(t_data **data);
 
 /* VALID MAP ROUTE */
-void	check_map_valid_path(t_data **data, int count_lines);
-void	copy_map(t_data **data, int y);
-void	flood_map(t_data **data, int y, int x);
-int		find_py(t_data **data);
 int		find_px(t_data **data);
+int		find_py(t_data **data);
+void	copy_map(t_data **data);
+void	check_map_valid_path(t_data **data);
 
 /* VALID MAP ROUTE 2 */
-void	flood_x(t_data **data, int x, int y);
+void	flood_map(t_data **data, int y, int x);
 void	flood_y(t_data **data, int x, int y);
-int		is_path_valid(t_data *data, int count_lines);
+int		is_path_valid(t_data *data);
 
 /* GNL */
 char	*ft_free_strjoin(char *s1, char *s2);
@@ -145,4 +150,9 @@ char	*get_line(char *str, char *tmp);
 char	*get_line_store(char *str);
 char	*get_str(int fd, char *str);
 char	*get_next_line(int fd);
+
+/* FREE MAP*/
+void	free_both_maps(t_data *data);
+void	free_map(t_data *data);
+
 #endif

@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/02/15 10:35:49 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/02/16 17:59:44 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,14 +22,16 @@ OBJ_PATH = obj/
 ###################### SOURCES ######################
 
 SRC = so_long.c \
+		init_map.c \
+		check_map.c \
+		check_map_walls.c \
+		check_map_valid_route.c \
+		check_map_valid_route_2.c \
+		free_map.c \
 		keys.c \
 		render_image.c \
 		window.c \
 		utils.c \
-		check_map.c \
-		check_map_2.c \
-		check_map_valid_route.c \
-		check_map_valid_route_2.c \
 		get_next_line.c
 SRC2 = $(addprefix $(SRC_PATH), $(SRC))
 

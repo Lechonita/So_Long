@@ -6,32 +6,21 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:33:06 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/15 14:59:34 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:01:08 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	check_map_file(char *argv)
-{
-	int	i;
-
-	if (!argv)
-		return ;
-	i = ft_strlen(argv) - 1;
-	if (argv[i] != 'r' || argv[i - 1] != 'e' || argv[i - 2] != 'b'
-		|| argv[i - 3] != '.')
-		exit_error (ERROR_MAP_FILE);
-}
-
-void	map_error_elements(t_data **data)
+void	map_error_elements(t_data *data)
 {
 	int	y;
 
 	y = -1;
-	while ((*data)->map[++y])
-		free((*data)->map[y]);
-	free((*data)->map);
+	while (++y < data->height && data->map[y])
+		free(data->map[y]);
+	free(data->map);
+	free(data);
 	exit_error(ERROR_MAP_ELEMENTS);
 }
 
@@ -42,8 +31,8 @@ void	check_map_chars(t_data **data)
 	map.c = 0;
 	map.e = 0;
 	map.p = 0;
-	map.y = count_map_lines((*data)->map) - 1;
-	while ((*data)->map[map.y] && map.y >= 0)
+	map.y = 0;
+	while (map.y < (*data)->height)
 	{
 		map.x = 0;
 		while ((*data)->map[map.y][map.x])
@@ -56,35 +45,39 @@ void	check_map_chars(t_data **data)
 				map.p += 1;
 			else if ((*data)->map[map.y][map.x] != '1'
 				&& (*data)->map[map.y][map.x] != '0')
-				map_error_elements(data);
+				map_error_elements(*data);
 			map.x++;
 		}
-		map.y--;
+		map.y++;
 	}
-	// printf("map.c = %d\n", map.c);
-	// printf("map.e = %d\n", map.e);
-	// printf("map.p = %d\n", map.p);
 	if (!map.c || map.e != 1 || map.p != 1)
 		exit_error (ERROR_MAP_ECP);
 }
 
-int	count_map_lines(char **map)
+void	check_map_shape(t_data **data)
 {
-	int		count;
+	t_map	map;
+	int		i;
 
-	count = 0;
-	while (map[count])
-		count++;
-	return (count);
+	map.y = 0;
+	i = 0;
+	(*data)->width = ft_strlen((*data)->map[0]);
+	while (i++ < (*data)->height)
+	{
+		if (ft_strlen((*data)->map[map.y]) != (*data)->width)
+		{
+			free_map(*data);
+			exit_error(ERROR_MAP_SHAPE);
+		}
+			
+		map.y++;
+	}
 }
 
 void	check_map(t_data *data)
 {
-	int		count_lines;
-
-	count_lines = count_map_lines(data->map);
-	check_map_shape(&data, count_lines);
+	check_map_shape(&data);
 	check_map_chars(&data);
-	check_map_walls(&data, count_lines);
-	check_map_valid_path(&data, count_lines);
+	check_map_walls(&data);
+	check_map_valid_path(&data);
 }
