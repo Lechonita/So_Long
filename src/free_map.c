@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:11:45 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/16 18:11:13 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:31:48 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_map(t_data *data)
 
 	i = -1;
 	while (++i < data->height && data->map[i])
-	 	free(data->map[i]);
+		free(data->map[i]);
 	free(data->map);
 	free(data);
 }
