@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:55 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/17 17:29:11 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:22:47 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@
 // 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, WIN_WIDTH / 2, WIN_HEIGHT / 2, RED);
 // 	return (0);
 // }
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->win_ptr + (y * data->img.line_len + x * (data->img.bpp / 8));
+	*(unsigned int*)dst = color;
+}
 
 int	main(int argc, char **argv)
 {
@@ -40,15 +48,13 @@ int	main(int argc, char **argv)
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, TITLE);
 	if (!data->win_ptr)
 		exit_error(ERROR_INIT_WIN);
-
-	// /* create image */
-	data->img.mlx_img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
-	data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp,
-			&data->img.line_len, &data->img.endian);
+	
+	xpm_images(data);
+	xpm_wall_images(data);
 
 	// /* hooks */
-	mlx_loop_hook(data->mlx_ptr, &render, &data);
-	mlx_key_hook(data->win_ptr, &keypress, &data);
+	mlx_loop_hook(data->mlx_ptr, &display_game, &data);
+	mlx_key_hook(data->win_ptr, &keypress_escape, &data);
 	mlx_hook(data->win_ptr, ClientMessage, LeaveWindowMask,
 		&buttonpress, &data);
 

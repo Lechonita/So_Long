@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/02/16 17:59:44 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/02/20 16:28:24 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRC = so_long.c \
 		render_image.c \
 		window.c \
 		utils.c \
-		get_next_line.c
+		get_next_line.c \
+		choose_image.c
 SRC2 = $(addprefix $(SRC_PATH), $(SRC))
 
 

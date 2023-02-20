@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/17 15:33:46 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:25:19 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@
 # define ERROR_MAP_SHAPE "Error\n >> Map shape incorrect\n"
 # define ERROR_MAP_COPY "Error\n >> Map could not be copied\n"
 # define ERROR_INVALID_ROUTE "Error\n >> This map has no possible path\n"
+# define ERROR_IMG_CONVERT "Error\n >> Could not convert xpm image\n"
+# define ERROR_IMG_WALL_CONVERT "Error\n >> Could not convert xpm wall image\n"
+
+typedef struct s_xpm
+{
+	void	*c;
+	void	*e;
+	void	*p;
+	void	*w;
+	void	*f;
+	
+}	t_xpm;
 
 typedef struct s_img
 {
@@ -59,6 +71,21 @@ typedef struct s_img
 	int		bpp; /* bits per pixel */
 	int		line_len;
 	int		endian;
+	char	*c;
+	char	*e_open;
+	char	*e_closed;
+	char	*p_right;
+	char	*p_left;
+	char	*w_top;
+	char	*w_bottom;
+	char	*w_right;
+	char	*w_left;
+	char	*w_topright;
+	char	*w_topleft;
+	char	*w_bottright;
+	char	*w_bottleft;
+	char	*f;
+	char	*o;
 }	t_img;
 
 typedef struct s_win
@@ -77,6 +104,7 @@ typedef struct s_data
 	int		width;
 	t_img	img;
 	t_win	win;
+	t_xpm	xpm;
 }	t_data;
 
 typedef struct s_map
@@ -102,20 +130,33 @@ typedef struct s_rect
 int		put_pixel(t_data *data);
 
 /* KEYS */
-int		keypress(int key, t_data *data);
+int		keypress_escape(int key, t_data *data);
 int		buttonpress(t_data *data);
-
-/* RENDER IMAGE */
-int		put_rectangle(t_img *img, t_rect rect);
-void	render_background(t_img *img, int color);
-void	img_pix_put(t_img *img, int x, int y, int color);
-int		render(t_data *data);
 
 /* WINDOW */
 void	init_window(t_data data);
 
 /* UTILS */
 void	exit_error(char *error_message);
+
+/* IMAGE */
+void	init_images(t_data *data);
+void	xpm_wall_images(t_data *data);
+void	xpm_images(t_data *data);
+int		display_game(t_data *data);
+
+/* CHOOSE IMAGE */
+void	image_corner(t_data *data, int y, int x);
+void	image_top_bottom_wall(t_data *data, int y, int x);
+void	image_side_wall(t_data *data, int y, int x);
+void	image_window(t_data *data, int y, int x);
+void	choose_image(t_data *data, int y, int x);
+
+/* FREE */
+void	free_both_maps(t_data *data);
+void	free_map(t_data *data);
+void	free_all_exit(char	*error_message, t_data *data);
+void	free_wall_exit(char	*error_message, t_data *data);
 
 /************************************************************/
 /**************************** MAP ***************************/
@@ -154,9 +195,5 @@ char	*get_line(char *str, char *tmp);
 char	*get_line_store(char *str);
 char	*get_str(int fd, char *str);
 char	*get_next_line(int fd);
-
-/* FREE MAP*/
-void	free_both_maps(t_data *data);
-void	free_map(t_data *data);
 
 #endif
