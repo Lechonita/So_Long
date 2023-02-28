@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/02/20 16:28:24 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/02/28 12:13:53 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SRC = so_long.c \
 		window.c \
 		utils.c \
 		get_next_line.c \
-		choose_image.c
+		choose_image.c \
+		one_image.c
 SRC2 = $(addprefix $(SRC_PATH), $(SRC))
 
 
@@ -46,7 +47,7 @@ OBJ2 = $(addprefix $(OBJ_PATH), $(OBJ))
 ####################### FLAGS #######################
 
 CCF  = clang $(FLAGS)
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra -fsanitize=address,undefined -g2
 
 
 ###################### INCLUDE ######################

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:35:25 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/17 15:30:03 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:39:23 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_height(char *map_filename)
 	int		height;
 	char	*line;
 
-	fd = open(map_filename, O_RDONLY);
+	fd = open(map_filename, O_RDWR);
 	if (fd < 0)
 		exit_error(ERROR_MAP_FD);
 	height = 0;
@@ -66,12 +66,12 @@ char	**get_map(t_data *data, char *map_filename)
 	data->height = get_height(map_filename);
 	if (data->height == 0)
 		exit_error(ERROR_MAP_EMPTY);
+	fd = open(map_filename, O_RDWR);
+	if (fd < 0)
+		exit_error(ERROR_MAP_FD);
 	map = malloc(sizeof(char *) * (data->height + 1));
 	if (!map)
 		return (NULL);
-	fd = open(map_filename, O_RDONLY);
-	if (fd < 0)
-		exit_error(ERROR_MAP_FD);
 	i = 0;
 	while (i < data->height)
 	{

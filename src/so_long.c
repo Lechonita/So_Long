@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:55 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/20 17:22:47 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:15:39 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,33 @@
 // 	return (0);
 // }
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
+// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+// {
+// 	char	*dst;
 
-	dst = data->win_ptr + (y * data->img.line_len + x * (data->img.bpp / 8));
-	*(unsigned int*)dst = color;
+// 	dst = data->win_ptr + (y * data->img.line_len + x * (data->img.bpp / 8));
+// 	*(unsigned int*)dst = color;
+// }
+
+void	init_values(t_data *data)
+{
+	data->map = NULL;
+	data->map_copy = NULL;
+	data->img.c = NULL;
+	data->img.e_open = NULL;
+	data->img.e_closed = NULL;
+	data->img.p_right = NULL;
+	data->img.p_left = NULL;
+	data->img.w_top = NULL;
+	data->img.w_bottom = NULL;
+	data->img.w_left = NULL;
+	data->img.w_right = NULL;
+	data->img.w_topright = NULL;
+	data->img.w_topleft = NULL;
+	data->img.w_bottomright = NULL;
+	data->img.w_bottomleft = NULL;
+	data->img.f = NULL;
+	data->img.o = NULL;
 }
 
 int	main(int argc, char **argv)
@@ -37,31 +58,36 @@ int	main(int argc, char **argv)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (0);
+
+	init_values(data);
+
 	data->map = get_map(data, argv[1]);
 	if (!data->map)
 		exit_error(ERROR_MAP_EMPTY);
 	check_map(data);
-	
+
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		exit_error(ERROR_INIT_MLX);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, TITLE);
 	if (!data->win_ptr)
 		exit_error(ERROR_INIT_WIN);
-	
-	xpm_images(data);
-	xpm_wall_images(data);
 
-	// /* hooks */
-	mlx_loop_hook(data->mlx_ptr, &display_game, &data);
+	init_images(data);
+	xpm_images(data);
+	display_game(data);
+
+	/* hooks */
+	// mlx_loop_hook(data->mlx_ptr, &display_game, &data);
 	mlx_key_hook(data->win_ptr, &keypress_escape, &data);
+	// mlx_hook(data->win_ptr, ButtonPressMask, ButtonPress, &free_image_exit, &data);
 	mlx_hook(data->win_ptr, ClientMessage, LeaveWindowMask,
 		&buttonpress, &data);
 
 	mlx_loop(data->mlx_ptr);
 
-	// /* destroy / close window */
-	mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
+	/* destroy / close window */
+	mlx_destroy_image(data->mlx_ptr, data->mlx_img);
 	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
 	free_both_maps(data);

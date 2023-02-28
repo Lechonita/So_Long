@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/20 17:25:19 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:15:10 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define BLUE 0x00FFFF
 # define WHITE 0xFFFFFF
 
+# define SIZE_PXL 32
+
 # define ERROR_ARGC "Error\n >> Not enough arguments to launch program\n"
 # define ERROR_INIT_MLX "Error\n >> MLX could not be initialized\n"
 # define ERROR_INIT_WIN "Error\n >> Window could not be initialized\n"
@@ -66,11 +68,10 @@ typedef struct s_xpm
 
 typedef struct s_img
 {
-	void	*mlx_img;
-	char	*addr;
-	int		bpp; /* bits per pixel */
-	int		line_len;
-	int		endian;
+	// char	*addr;
+	// int		bpp; /* bits per pixel */
+	// int		line_len;
+	// int		endian;
 	char	*c;
 	char	*e_open;
 	char	*e_closed;
@@ -82,8 +83,8 @@ typedef struct s_img
 	char	*w_left;
 	char	*w_topright;
 	char	*w_topleft;
-	char	*w_bottright;
-	char	*w_bottleft;
+	char	*w_bottomright;
+	char	*w_bottomleft;
 	char	*f;
 	char	*o;
 }	t_img;
@@ -98,6 +99,7 @@ typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	void	*mlx_img;
 	char	**map;
 	char	**map_copy;
 	int		height;
@@ -117,17 +119,18 @@ typedef struct s_map
 	int		p;
 }	t_map;
 
-typedef struct s_rect
-{
-	int	x;
-	int	y;
-	int	width;
-	int	height;
-	int	color;
-}	t_rect;
+// typedef struct s_rect
+// {
+// 	int	x;
+// 	int	y;
+// 	int	width;
+// 	int	height;
+// 	int	color;
+// }	t_rect;
 
 /* SO LONG */
-int		put_pixel(t_data *data);
+// int		put_pixel(t_data *data);
+void	init_values(t_data *data);
 
 /* KEYS */
 int		keypress_escape(int key, t_data *data);
@@ -149,7 +152,7 @@ int		display_game(t_data *data);
 void	image_corner(t_data *data, int y, int x);
 void	image_top_bottom_wall(t_data *data, int y, int x);
 void	image_side_wall(t_data *data, int y, int x);
-void	image_window(t_data *data, int y, int x);
+void	image_center(t_data *data, int y, int x);
 void	choose_image(t_data *data, int y, int x);
 
 /* FREE */
@@ -157,6 +160,8 @@ void	free_both_maps(t_data *data);
 void	free_map(t_data *data);
 void	free_all_exit(char	*error_message, t_data *data);
 void	free_wall_exit(char	*error_message, t_data *data);
+
+void	free_image_exit(t_data *data);
 
 /************************************************************/
 /**************************** MAP ***************************/
