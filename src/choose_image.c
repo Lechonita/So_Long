@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:27:31 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/28 15:14:10 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/01 16:10:07 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	image_side_wall(t_data *data, int y, int x)
 
 void	image_center(t_data *data, int y, int x)
 {
+	printf("letter = %d\n", data->map[y][x]);
 	if (data->map[y][x] == 'C')
 		mlx_put_image_to_window(
 			data->mlx_ptr, data->win_ptr, data->img.c, x * SIZE_PXL, y * SIZE_PXL);
@@ -88,7 +89,6 @@ void	choose_image(t_data *data, int y, int x)
 	if (y == 0)
 	{
 		if ((x == 0) || (x == data->width - 1)
-		|| (y == data->height - 1 && x == 0)
 		|| (y == data->height - 1 && x == data->width - 1))
 			image_corner(data, y, x);
 		else if (x > 0 && x < (data->width - 1))
@@ -109,8 +109,7 @@ void	choose_image(t_data *data, int y, int x)
 			image_top_bottom_wall(data, y, x);
 		else if ((x == data->width - 1) && ((y >= 0 || y <= (data->height - 1))))
 			image_side_wall(data, y, x);
+		else
+			image_center(data, y, x);
 	}
-	else
-		image_center(data, y, x);
 }
-

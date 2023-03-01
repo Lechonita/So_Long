@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/02/28 12:13:53 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/03/01 17:34:36 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,14 +27,14 @@ SRC = so_long.c \
 		check_map_walls.c \
 		check_map_valid_route.c \
 		check_map_valid_route_2.c \
-		free_map.c \
+		free.c \
 		keys.c \
 		render_image.c \
-		window.c \
 		utils.c \
 		get_next_line.c \
 		choose_image.c \
-		one_image.c
+		init.c \
+		player.c
 SRC2 = $(addprefix $(SRC_PATH), $(SRC))
 
 

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/28 16:15:10 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/01 17:43:28 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # endif
 
 # define TITLE "So Long Suckers"
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+// # define WIN_WIDTH 2240
+// # define WIN_HEIGHT 1080
 
 # define GREEN 0x008000
 # define RED 0x00FF0000
@@ -38,7 +38,7 @@
 # define BLUE 0x00FFFF
 # define WHITE 0xFFFFFF
 
-# define SIZE_PXL 32
+# define SIZE_PXL 64
 
 # define ERROR_ARGC "Error\n >> Not enough arguments to launch program\n"
 # define ERROR_INIT_MLX "Error\n >> MLX could not be initialized\n"
@@ -53,18 +53,20 @@
 # define ERROR_MAP_SHAPE "Error\n >> Map shape incorrect\n"
 # define ERROR_MAP_COPY "Error\n >> Map could not be copied\n"
 # define ERROR_INVALID_ROUTE "Error\n >> This map has no possible path\n"
-# define ERROR_IMG_CONVERT "Error\n >> Could not convert xpm image\n"
+# define ERROR_IMG_CONVERT "Error\n >> Could not convert xpm non-wall image\n"
 # define ERROR_IMG_WALL_CONVERT "Error\n >> Could not convert xpm wall image\n"
 
-typedef struct s_xpm
+typedef struct s_player
 {
-	void	*c;
-	void	*e;
-	void	*p;
-	void	*w;
-	void	*f;
-	
-}	t_xpm;
+	int 	pos_x;
+	int 	pos_y;
+	char	*p1_right;
+	char	*p2_right;
+	char	*p3_right;
+	char	*p1_left;
+	char	*p2_left;
+	char	*p3_left;
+}	t_player;
 
 typedef struct s_img
 {
@@ -97,21 +99,20 @@ typedef struct s_win
 
 typedef struct s_data
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*mlx_img;
-	char	**map;
-	char	**map_copy;
-	int		height;
-	int		width;
-	t_img	img;
-	t_win	win;
-	t_xpm	xpm;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	void		*mlx_img;
+	char		**map;
+	char		**map_copy;
+	int			height;
+	int			width;
+	t_img		img;
+	t_win		win;
+	t_player	player;
 }	t_data;
 
 typedef struct s_map
 {
-	void	*mlx_map;
 	int		x;
 	int		y;
 	int		c;
@@ -119,31 +120,27 @@ typedef struct s_map
 	int		p;
 }	t_map;
 
-// typedef struct s_rect
-// {
-// 	int	x;
-// 	int	y;
-// 	int	width;
-// 	int	height;
-// 	int	color;
-// }	t_rect;
 
-/* SO LONG */
-// int		put_pixel(t_data *data);
-void	init_values(t_data *data);
+/* INIT */
+void	init_win_struct(t_data *data);
+void	init_player_img(t_data *data);
+void	init_img_struct(t_data *data);
+void	init_data_struct(t_data *data, char *map_filename);
+void	init_struct(t_data *data, char *map_filename);
 
 /* KEYS */
 int		keypress_escape(int key, t_data *data);
 int		buttonpress(t_data *data);
 
-/* WINDOW */
-void	init_window(t_data data);
+/* PLAYER */
+void	player_move(t_data *data);
+int		player_pos_x(t_data *data);
 
 /* UTILS */
 void	exit_error(char *error_message);
+void	display_map(t_data *data);
 
 /* IMAGE */
-void	init_images(t_data *data);
 void	xpm_wall_images(t_data *data);
 void	xpm_images(t_data *data);
 int		display_game(t_data *data);
@@ -161,15 +158,13 @@ void	free_map(t_data *data);
 void	free_all_exit(char	*error_message, t_data *data);
 void	free_wall_exit(char	*error_message, t_data *data);
 
-void	free_image_exit(t_data *data);
-
 /************************************************************/
 /**************************** MAP ***************************/
 /************************************************************/
 
 /* INIT MAP */
 void	map_filename(char *argv);
-int		get_width(t_data **data);
+int		get_width(char *map_filename);
 int		get_height(char *map_filename);
 char	**get_map(t_data *data, char *map_filename);
 

@@ -6,47 +6,11 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:55 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/28 16:15:39 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/01 17:10:17 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-// int put_pixel(t_data *data)
-// {
-// 	if (data->win_ptr)
-// 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, WIN_WIDTH / 2, WIN_HEIGHT / 2, RED);
-// 	return (0);
-// }
-
-// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-// {
-// 	char	*dst;
-
-// 	dst = data->win_ptr + (y * data->img.line_len + x * (data->img.bpp / 8));
-// 	*(unsigned int*)dst = color;
-// }
-
-void	init_values(t_data *data)
-{
-	data->map = NULL;
-	data->map_copy = NULL;
-	data->img.c = NULL;
-	data->img.e_open = NULL;
-	data->img.e_closed = NULL;
-	data->img.p_right = NULL;
-	data->img.p_left = NULL;
-	data->img.w_top = NULL;
-	data->img.w_bottom = NULL;
-	data->img.w_left = NULL;
-	data->img.w_right = NULL;
-	data->img.w_topright = NULL;
-	data->img.w_topleft = NULL;
-	data->img.w_bottomright = NULL;
-	data->img.w_bottomleft = NULL;
-	data->img.f = NULL;
-	data->img.o = NULL;
-}
 
 int	main(int argc, char **argv)
 {
@@ -59,8 +23,7 @@ int	main(int argc, char **argv)
 	if (!data)
 		return (0);
 
-	init_values(data);
-
+	init_struct(data, argv[1]);
 	data->map = get_map(data, argv[1]);
 	if (!data->map)
 		exit_error(ERROR_MAP_EMPTY);
@@ -69,11 +32,10 @@ int	main(int argc, char **argv)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		exit_error(ERROR_INIT_MLX);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, TITLE);
+	data->win_ptr = mlx_new_window(data->mlx_ptr, data->win.x, data->win.y, TITLE);
 	if (!data->win_ptr)
 		exit_error(ERROR_INIT_WIN);
 
-	init_images(data);
 	xpm_images(data);
 	display_game(data);
 

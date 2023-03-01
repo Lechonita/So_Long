@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:33:06 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/16 18:01:08 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/01 12:44:13 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,15 @@ void	check_map_chars(t_data **data)
 void	check_map_shape(t_data **data)
 {
 	t_map	map;
-	int		i;
 
 	map.y = 0;
-	i = 0;
-	(*data)->width = ft_strlen((*data)->map[0]);
-	while (i++ < (*data)->height)
+	while(map.y < (*data)->height)
 	{
 		if (ft_strlen((*data)->map[map.y]) != (*data)->width)
 		{
 			free_map(*data);
 			exit_error(ERROR_MAP_SHAPE);
 		}
-			
 		map.y++;
 	}
 }

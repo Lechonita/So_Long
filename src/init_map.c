@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:35:25 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/28 15:39:23 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/01 17:05:33 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,24 @@ void	map_filename(char *argv)
 		exit_error (ERROR_MAP_FILE);
 }
 
-int	get_width(t_data **data)
+int	get_width(char *map_filename)
 {
+	int		fd;
 	int		width;
-	t_map	map;
-	
-	map.y = 0;
-	width = 0;
-	while ((*data)->map[map.y][width])
-		width++;
-	return (width);
+	char	*line;
+
+	fd = open(map_filename, O_RDWR);
+	if (fd < 0)
+		exit_error(ERROR_MAP_FD);
+	line = get_next_line(fd);
+	width = ft_strlen(line) - 1;
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+	return(width);
 }
 
 int	get_height(char *map_filename)
@@ -54,7 +62,7 @@ int	get_height(char *map_filename)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	return (height);
+	return(height);
 }
 
 char	**get_map(t_data *data, char *map_filename)
@@ -63,7 +71,6 @@ char	**get_map(t_data *data, char *map_filename)
 	char	**map;
 	int		i;
 
-	data->height = get_height(map_filename);
 	if (data->height == 0)
 		exit_error(ERROR_MAP_EMPTY);
 	fd = open(map_filename, O_RDWR);
