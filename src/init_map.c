@@ -6,63 +6,54 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:35:25 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/01 17:05:33 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:48:06 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	map_filename(char *argv)
+void	check_map_walls(t_data **data)
 {
-	int	i;
+	t_map	map;
 
-	if (!argv)
-		return ;
-	i = ft_strlen(argv) - 1;
-	if (argv[i] != 'r' || argv[i - 1] != 'e' || argv[i - 2] != 'b'
-		|| argv[i - 3] != '.')
-		exit_error (ERROR_MAP_FILE);
+	map.y = 0;
+	while (map.y < (*data)->height)
+	{
+		if ((*data)->map[map.y][0] != '1'
+			|| (*data)->map[map.y][ft_strlen((*data)->map[map.y]) - 1] != '1')
+			{
+				free_map(*data);
+				exit_error(*data, ERROR_MAP_WALLS);
+			}
+		map.y++;
+	}
+	if (check_map_top_bottom(data))
+	{
+		free_map(*data);
+		exit_error(*data, ERROR_MAP_WALLS);
+	}
 }
 
-int	get_width(char *map_filename)
+int	check_map_top_bottom(t_data **data)
 {
-	int		fd;
-	int		width;
-	char	*line;
+	t_map	map;
 
-	fd = open(map_filename, O_RDWR);
-	if (fd < 0)
-		exit_error(ERROR_MAP_FD);
-	line = get_next_line(fd);
-	width = ft_strlen(line) - 1;
-	while (line)
+	map.y = (*data)->height - 1;
+	map.x = 0;
+	while ((*data)->map[0][map.x])
 	{
-		free(line);
-		line = get_next_line(fd);
+		if ((*data)->map[0][map.x] != '1')
+			return (1);
+		map.x++;
 	}
-	close(fd);
-	return(width);
-}
-
-int	get_height(char *map_filename)
-{
-	int		fd;
-	int		height;
-	char	*line;
-
-	fd = open(map_filename, O_RDWR);
-	if (fd < 0)
-		exit_error(ERROR_MAP_FD);
-	height = 0;
-	line = get_next_line(fd);
-	while (line)
+	map.x = 0;
+	while ((*data)->map[map.y][map.x])
 	{
-		height++;
-		free(line);
-		line = get_next_line(fd);
+		if ((*data)->map[map.y][map.x] != '1')
+			return (1);
+		map.x++;
 	}
-	close(fd);
-	return(height);
+	return (0);
 }
 
 char	**get_map(t_data *data, char *map_filename)
@@ -72,10 +63,10 @@ char	**get_map(t_data *data, char *map_filename)
 	int		i;
 
 	if (data->height == 0)
-		exit_error(ERROR_MAP_EMPTY);
+		exit_error(data, ERROR_MAP_EMPTY);
 	fd = open(map_filename, O_RDWR);
 	if (fd < 0)
-		exit_error(ERROR_MAP_FD);
+		exit_error(data, ERROR_MAP_FD);
 	map = malloc(sizeof(char *) * (data->height + 1));
 	if (!map)
 		return (NULL);
@@ -91,4 +82,16 @@ char	**get_map(t_data *data, char *map_filename)
 	}
 	close(fd);
 	return (map);
+}
+
+void	map_filename(t_data *data, char *argv)
+{
+	int	i;
+
+	if (!argv)
+		return ;
+	i = ft_strlen(argv) - 1;
+	if (argv[i] != 'r' || argv[i - 1] != 'e' || argv[i - 2] != 'b'
+		|| argv[i - 3] != '.')
+		exit_error (data, ERROR_MAP_FILE);
 }

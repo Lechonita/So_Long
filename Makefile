@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/03/01 17:34:36 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/03/02 15:34:58 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,7 @@ OBJ_PATH = obj/
 SRC = so_long.c \
 		init_map.c \
 		check_map.c \
-		check_map_walls.c \
 		check_map_valid_route.c \
-		check_map_valid_route_2.c \
 		free.c \
 		keys.c \
 		render_image.c \
@@ -34,7 +32,8 @@ SRC = so_long.c \
 		get_next_line.c \
 		choose_image.c \
 		init.c \
-		player.c
+		player.c \
+		flood.c
 SRC2 = $(addprefix $(SRC_PATH), $(SRC))
 
 

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:27:31 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/01 16:10:07 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:41:16 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	image_side_wall(t_data *data, int y, int x)
 
 void	image_center(t_data *data, int y, int x)
 {
-	printf("letter = %d\n", data->map[y][x]);
 	if (data->map[y][x] == 'C')
 		mlx_put_image_to_window(
 			data->mlx_ptr, data->win_ptr, data->img.c, x * SIZE_PXL, y * SIZE_PXL);

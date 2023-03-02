@@ -6,11 +6,27 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:33:06 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/01 12:44:13 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:45:55 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	count_collectibles(t_data *data)
+{
+	t_map	map;
+	
+	map.y = -1;
+	while (++map.y < data->height)
+	{
+		map.x = -1;
+		while(++map.x < data->width)
+		{
+			if (data->map[map.y][map.x] == 'C')
+				data->collectibles++;
+		}
+	}
+}
 
 void	map_error_elements(t_data *data)
 {
@@ -21,7 +37,7 @@ void	map_error_elements(t_data *data)
 		free(data->map[y]);
 	free(data->map);
 	free(data);
-	exit_error(ERROR_MAP_ELEMENTS);
+	exit_error(data, ERROR_MAP_ELEMENTS);
 }
 
 void	check_map_chars(t_data **data)
@@ -51,7 +67,7 @@ void	check_map_chars(t_data **data)
 		map.y++;
 	}
 	if (!map.c || map.e != 1 || map.p != 1)
-		exit_error (ERROR_MAP_ECP);
+		exit_error (*data, ERROR_MAP_ECP);
 }
 
 void	check_map_shape(t_data **data)
@@ -64,7 +80,7 @@ void	check_map_shape(t_data **data)
 		if (ft_strlen((*data)->map[map.y]) != (*data)->width)
 		{
 			free_map(*data);
-			exit_error(ERROR_MAP_SHAPE);
+			exit_error(*data, ERROR_MAP_SHAPE);
 		}
 		map.y++;
 	}
@@ -76,4 +92,6 @@ void	check_map(t_data *data)
 	check_map_chars(&data);
 	check_map_walls(&data);
 	check_map_valid_path(&data);
+	count_collectibles(data);
+	printf("collectiblles = %d\n", data->collectibles);
 }

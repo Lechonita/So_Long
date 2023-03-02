@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:47:09 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/01 17:43:41 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:50:36 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	init_win_struct(t_data *data)
 	data->win.x = data->width * SIZE_PXL;
 }
 
-void	init_player_img(t_data *data)
+void	init_player_struct(t_data *data)
 {
-	data->player.pos_x = player_pos_x(data);
-	// data->player.pos_y = ;
+	data->player.pos_x = 0;
+	data->player.pos_y = 0;
 	data->player.p1_right = "./images_xpm/p1_right.xpm";
 	data->player.p2_right = "./images_xpm/p2_right.xpm";
 	data->player.p3_right = "./images_xpm/p3_right.xpm";
@@ -56,14 +56,17 @@ void	init_data_struct(t_data *data, char *map_filename)
 	data->mlx_img = NULL;
 	data->map =  NULL;
 	data->map_copy = NULL;
-	data->height = get_height(map_filename);
-	data->width = get_width(map_filename);
+	data->height = get_height(data, map_filename);
+	data->width = get_width(data, map_filename);
+	data->moves = 0;
+	data->collectibles = 0;
+	data->game_finish = 0;
 }
 
 void	init_struct(t_data *data, char *map_filename)
 {
 	init_data_struct(data, map_filename);
 	init_img_struct(data);
-	init_player_img(data);
+	init_player_struct(data);
 	init_win_struct(data);
 }

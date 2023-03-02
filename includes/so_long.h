@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/01 17:43:28 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:55:35 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,15 @@
 # define ERROR_MAP_ECP "Error\n >> Wrong quantity of Start, Exit and/or Item\n"
 # define ERROR_MAP_WALLS "Error\n >> Map walls are incomplete\n"
 # define ERROR_MAP_FD "Error\n >> Map file could not be opened\n"
+// # define ERROR_MAP_FDW "Error\n >> Map file could not be opened (width)\n"
+// # define ERROR_MAP_FDH "Error\n >> Map file could not be opened (height)\n"
 # define ERROR_MAP_EMPTY "Error\n >> Map file is empty\n"
 # define ERROR_MAP_SHAPE "Error\n >> Map shape incorrect\n"
 # define ERROR_MAP_COPY "Error\n >> Map could not be copied\n"
 # define ERROR_INVALID_ROUTE "Error\n >> This map has no possible path\n"
 # define ERROR_IMG_CONVERT "Error\n >> Could not convert xpm non-wall image\n"
 # define ERROR_IMG_WALL_CONVERT "Error\n >> Could not convert xpm wall image\n"
+# define WIN "\n\n  ===> YOU IN ! <===\n\n"
 
 typedef struct s_player
 {
@@ -106,6 +109,9 @@ typedef struct s_data
 	char		**map_copy;
 	int			height;
 	int			width;
+	int			moves;
+	int			collectibles;
+	int			game_finish;
 	t_img		img;
 	t_win		win;
 	t_player	player;
@@ -123,21 +129,25 @@ typedef struct s_map
 
 /* INIT */
 void	init_win_struct(t_data *data);
-void	init_player_img(t_data *data);
+void	init_player_struct(t_data *data);
 void	init_img_struct(t_data *data);
 void	init_data_struct(t_data *data, char *map_filename);
 void	init_struct(t_data *data, char *map_filename);
 
 /* KEYS */
-int		keypress_escape(int key, t_data *data);
+int		keypress(int key, t_data *data);
 int		buttonpress(t_data *data);
 
 /* PLAYER */
-void	player_move(t_data *data);
-int		player_pos_x(t_data *data);
+void	do_movement(t_data *data, int x, int y);
+int		move_ok(t_data *data, int x, int y, int key);
+void	move_player(int key, t_data *data);
 
 /* UTILS */
-void	exit_error(char *error_message);
+void	exit_error(t_data *data, char *error_message);
+int		get_width(t_data *data,char *map_filename);
+int		get_height(t_data *data,char *map_filename);
+
 void	display_map(t_data *data);
 
 /* IMAGE */
@@ -155,39 +165,38 @@ void	choose_image(t_data *data, int y, int x);
 /* FREE */
 void	free_both_maps(t_data *data);
 void	free_map(t_data *data);
+void	free_img(t_data *data);
+void	free_wall_img(t_data *data);
 void	free_all_exit(char	*error_message, t_data *data);
-void	free_wall_exit(char	*error_message, t_data *data);
+void	free_close(t_data *data);
 
 /************************************************************/
 /**************************** MAP ***************************/
 /************************************************************/
 
 /* INIT MAP */
-void	map_filename(char *argv);
-int		get_width(char *map_filename);
-int		get_height(char *map_filename);
+void	check_map_walls(t_data **data);
+int		check_map_top_bottom(t_data **data);
 char	**get_map(t_data *data, char *map_filename);
+void	map_filename(t_data *data, char *argv);
 
 /* CHECK MAP */
+void	count_collectibles(t_data *data);
 void	map_error_elements(t_data *data);
 void	check_map_chars(t_data **data);
 void	check_map_shape(t_data **data);
 void	check_map(t_data *data);
 
-/* CHECK MAP WALLS */
-void	check_map_walls(t_data **data);
-int		check_map_top_bottom(t_data **data);
-
 /* VALID MAP ROUTE */
+int		is_path_valid(t_data *data);
 int		find_px(t_data **data);
 int		find_py(t_data **data);
 void	copy_map(t_data **data);
 void	check_map_valid_path(t_data **data);
 
-/* VALID MAP ROUTE 2 */
+/* FLOOD */
 void	flood_map(t_data **data, int y, int x);
 void	flood_y(t_data **data, int x, int y);
-int		is_path_valid(t_data *data);
 
 /* GNL */
 char	*ft_free_strjoin(char *s1, char *s2);

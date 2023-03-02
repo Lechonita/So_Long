@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_map.c                                         :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:11:45 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/28 15:11:43 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:55:23 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	free_map(t_data *data)
 	free(data);
 }
 
-void	free_all_exit(char	*error_message, t_data *data)
+void	free_img(t_data *data)
 {
 	if (data->img.c)
 		mlx_destroy_image(data->mlx_ptr, data->img.c);
@@ -58,19 +58,9 @@ void	free_all_exit(char	*error_message, t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->img.f);
 	if (data->img.o)
 		mlx_destroy_image(data->mlx_ptr, data->img.o);
-	if (data->map)
-		free_map(data);
-	// if (data->win_ptr)
-	// 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	// if (data->mlx_ptr)
-	// {
-	// 	mlx_destroy_display(data->mlx_ptr);
-	// 	free(data->mlx_ptr);
-	// }
-	exit_error(error_message);
 }
 
-void	free_wall_exit(char	*error_message, t_data *data)
+void	free_wall_img(t_data *data)
 {
 	if (data->img.w_top)
 		mlx_destroy_image(data->mlx_ptr, data->img.w_top);
@@ -88,14 +78,28 @@ void	free_wall_exit(char	*error_message, t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->img.w_bottomright);
 	if (data->img.w_bottomleft)
 		mlx_destroy_image(data->mlx_ptr, data->img.w_bottomleft);
+}
+
+void	free_all_exit(char	*error_message, t_data *data)
+{
+	free_img(data);
+	free_wall_img(data);
 	if (data->map)
 		free_map(data);
-	// if (data->win_ptr)
-	// 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	// if (data->mlx_ptr)
-	// {
-	// 	mlx_destroy_display(data->mlx_ptr);
-	// 	free(data->mlx_ptr);
-	// }
-	exit_error(error_message);
+	exit_error(data, error_message);
+}
+
+void	free_close(t_data *data)
+{
+	if (data->map && data->map_copy)
+		free_both_maps(data);
+	else if (data->map)
+		free_map(data);
+	if (data->win_ptr)
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	if (data->mlx_ptr)
+	{
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+	}
 }

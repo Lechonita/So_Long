@@ -6,16 +6,58 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 14:31:43 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/01 12:27:20 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:51:21 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	exit_error(char *error_message)
+void	exit_error(t_data *data, char *error_message)
 {
 	write (1, error_message, ft_strlen(error_message));
+	free_close(data);
 	exit (0);
+}
+
+int	get_width(t_data *data,char *map_filename)
+{
+	int		fd;
+	int		width;
+	char	*line;
+
+	fd = open(map_filename, O_RDWR);
+	if (fd < 0)
+		exit_error(data, ERROR_MAP_FD);
+	line = get_next_line(fd);
+	width = ft_strlen(line) - 1;
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+	return(width);
+}
+
+int	get_height(t_data *data,char *map_filename)
+{
+	int		fd;
+	int		height;
+	char	*line;
+
+	fd = open(map_filename, O_RDWR);
+	if (fd < 0)
+		exit_error(data, ERROR_MAP_FD);
+	height = 0;
+	line = get_next_line(fd);
+	while (line)
+	{
+		height++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+	return(height);
 }
 
 /* TO BE REMOVED */

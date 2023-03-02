@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 11:17:18 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/01 16:46:04 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:35:42 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	xpm_wall_images(t_data *data)
 	if (!data->img.w_top || !data->img.w_bottom || !data->img.w_right || !data->img.w_left
 		|| !data->img.w_topright || !data->img.w_topleft || !data->img.w_bottomright
 		|| !data->img.w_bottomleft)
-		free_wall_exit(ERROR_IMG_WALL_CONVERT, data);
+		free_all_exit(ERROR_IMG_WALL_CONVERT, data);
 }
 
 void	xpm_images(t_data *data)

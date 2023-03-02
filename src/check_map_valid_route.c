@@ -6,27 +6,50 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:31:40 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/16 17:41:51 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:45:31 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	find_px(t_data **data)
+int	is_path_valid(t_data *data)
 {
 	t_map	map;
 
 	map.y = 0;
-	while ((*data)->map_copy[map.y])
+	while (map.y < data->height)
 	{
 		map.x = 0;
-		while ((*data)->map_copy[map.y][map.x])
+		while (data->map_copy[map.y][map.x])
 		{
-			if ((*data)->map_copy[map.y][map.x] == 'P')
-				return (map.x) ;
+			if (data->map_copy[map.y][map.x] == 'C'
+				|| data->map_copy[map.y][map.x] == 'E'
+				|| data->map_copy[map.y][map.x] == 'P')
+				return (1);
 			map.x++;
 		}
 		map.y++;
+	}
+	return (0);
+}
+
+int	find_px(t_data **data)
+{
+	t_map	map;
+
+	map.y = -1;
+	while ((*data)->map_copy[++map.y])
+	{
+		map.x = -1;
+		while ((*data)->map_copy[map.y][++map.x])
+		{
+			if ((*data)->map_copy[map.y][map.x] == 'P')
+			{
+				(*data)->player.pos_x = map.x;
+				printf("x == %d\n", (*data)->player.pos_x);
+				return (map.x) ;
+			}
+		}
 	}
 	return (0);
 }
@@ -35,17 +58,19 @@ int	find_py(t_data **data)
 {
 	t_map	map;
 
-	map.y = 0;
-	while ((*data)->map_copy[map.y])
+	map.y = -1;
+	while ((*data)->map_copy[++map.y])
 	{
-		map.x = 0;
-		while ((*data)->map_copy[map.y][map.x])
+		map.x = -1;
+		while ((*data)->map_copy[map.y][++map.x])
 		{
 			if ((*data)->map_copy[map.y][map.x] == 'P')
+			{
+				(*data)->player.pos_y = map.y;
+				printf("y == %d\n", (*data)->player.pos_y);
 				return (map.y) ;
-			map.x++;
+			}
 		}
-		map.y++;
 	}
 	return (0);
 }
@@ -74,7 +99,7 @@ void	copy_map(t_data **data)
 	if (copy_lines[0] == '\0')
 	{
 		free(copy_lines);
-		exit_error(ERROR_MAP_COPY);
+		exit_error(*data, ERROR_MAP_COPY);
 	}
 	(*data)->map_copy = ft_split(copy_lines, '\n');
 	free(copy_lines);
@@ -84,11 +109,11 @@ void	check_map_valid_path(t_data **data)
 {
 	copy_map(data);
 	if (!(*data)->map_copy)
- 		exit_error(ERROR_MAP_COPY);
+ 		exit_error(*data, ERROR_MAP_COPY);
 	flood_map(data, find_py(data), find_px(data));
 	if(is_path_valid(*data))
 	{
 		free_both_maps(*data);
-		exit_error(ERROR_INVALID_ROUTE);
+		exit_error(*data, ERROR_INVALID_ROUTE);
 	}
 }
