@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 12:04:19 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/01 16:59:44 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:26:53 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <string.h>
 # include <ctype.h>
 # include <stdint.h>
-/*# include <bsd/string.h>*/
 
 /* Libft Part 1 Functions */
 

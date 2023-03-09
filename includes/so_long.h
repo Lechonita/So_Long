@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/09 15:00:00 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/09 16:12:10 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SO_LONG_H
 
 # include "libft.h"
+# include "ft_printf.h"
 # include "mlx.h"
 
 # include <X11/X.h>
@@ -56,6 +57,7 @@
 # define ERROR_INVALID_ROUTE "Error\n >> This map has no possible path\n"
 # define ERROR_IMG_CONVERT "Error\n >> Could not convert xpm non-wall image\n"
 # define ERROR_IMG_WALL_CONVERT "Error\n >> Could not convert xpm wall image\n"
+# define ERROR_IMG_PLAYER_CONVERT "Error\n >> Could not convert xpm player image\n"
 # define WIN "\n\n  ===> YOU WIN ! <===\n\n"
 
 typedef struct s_player
@@ -149,9 +151,10 @@ int		get_height(t_data *data,char *map_filename);
 void	display_map(t_data *data);
 
 /* IMAGE */
+int		display_game(t_data *data);
+void	xpm_player_images(t_data *data);
 void	xpm_wall_images(t_data *data);
 void	xpm_images(t_data *data);
-int		display_game(t_data *data);
 
 /* CHOOSE IMAGE */
 void	image_corner(t_data *data, int y, int x);
@@ -167,6 +170,9 @@ void	free_img(t_data *data);
 void	free_wall_img(t_data *data);
 void	free_all_exit(char	*error_message, t_data *data);
 void	free_close(t_data *data);
+
+/* ANIMATION */
+void	animate_player_left(t_data *data, int x, int y);
 
 /************************************************************/
 /**************************** MAP ***************************/

@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/03/09 14:55:16 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/03/09 15:18:27 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ FLAGS = -Wall -Werror -Wextra -fsanitize=address,undefined -g2
 
 INC = -I ./includes/ \
 		-I ./libft/ \
+		-I ./ft_printf/ \
 		-I ./mlx_linux/
 
 HDR = includes/so_long.h \
@@ -65,6 +66,12 @@ HDR = includes/so_long.h \
 
 LIBFT_PATH = libft
 LIBFT = $(LIBFT_PATH)/libft.a
+
+
+####################### PRINTF #######################
+
+PRINTF_PATH = ft_printf
+PRINTF = $(PRINTF_PATH)/libftprintf.a
 
 
 ######################## MLX ########################
@@ -87,7 +94,7 @@ _BOLD=\033[1m'
 
 ####################### RULES #######################
 
-all : $(OBJ_PATH) $(LIBFT) $(MLX) $(NAME)
+all : $(OBJ_PATH) $(LIBFT) $(PRINTF) $(MLX) $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(HDR)
 	@echo -n "$(_GREY)-${END}"
@@ -101,6 +108,11 @@ $(LIBFT):
 	@make -sC $(LIBFT_PATH)
 	@echo "$(_GREEN)\n\n✅ Libft compiled\n${_END}"
 
+$(PRINTF):
+	@echo "$(_GREY)Compiling Ft_printf...${_END}"
+	@make -sC $(PRINTF_PATH)
+	@echo "$(_GREEN)\n\n✅ Ft_printf compiled\n${_END}"
+
 $(MLX):
 	@echo "$(_GREY)Compiling MiniLibX...\n${_END}"
 	@make -sC $(MLX_PATH)
@@ -108,16 +120,18 @@ $(MLX):
 
 $(NAME): $(OBJ2)
 	@echo "$(_GREY)\nCompiling So_long...${_END}"
-	@$(CCF) $(OBJ2) $(LIBFT) $(MLX) $(MLX_FLAGS) $(INC) -o $(NAME)
+	@$(CCF) $(OBJ2) $(LIBFT) $(PRINTF) $(MLX) $(MLX_FLAGS) $(INC) -o $(NAME)
 	@echo "$(_GREEN)\n✅ So_long compiled\n${_END}"
 	@echo "$(_GREEN)\n🆗🕺 READY 🕺🆗\n${_END}"
 
-malloc_test: $(OBJ_PATH) $(OBJ2) $(LIBFT) $(MLX) $(NAME)
-	$(CCF) -fsanitize=undefined -rdynamic -o $@ ${OBJ2} $(LIBFT) $(INC) -L. -lmallocator
+malloc_test: $(OBJ_PATH) $(OBJ2) $(LIBFT) $(PRINTF) $(MLX) $(NAME)
+	$(CCF) -fsanitize=undefined -rdynamic -o $@ ${OBJ2} $(LIBFT) $(PRINTF) $(INC) -L. -lmallocator
 
 clean:
 	@make clean -sC $(LIBFT_PATH)
 	@echo "$(_CYAN)\n🌀 Libft cleaned\n${_END}"
+	@make clean -sC $(PRINTF_PATH)
+	@echo "$(_CYAN)\n🌀 Ft_printf cleaned\n${_END}"
 	@make clean -sC $(MLX_PATH)
 	@echo "$(_CYAN)\n🌀 MiniLibX cleaned\n${_END}"
 	@rm -rf $(OBJ_PATH)
@@ -125,7 +139,7 @@ clean:
 	@echo "$(_CYAN)🚿🛁 ✧ ALL CLEANED ✧ 🛁🚿\n${_END}"
 
 fclean: clean
-	@make fclean -sC $(LIBFT_PATH)
+	@make fclean -sC $(LIBFT_PATH) $(PRINTF_PATH)
 	@rm -f $(NAME)
 
 re: fclean all
