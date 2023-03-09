@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:49:28 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/02 17:37:52 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/09 11:55:38 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	keypress(int key, t_data *data)
 {
-	printf("data->player.pos_x = %d && data->player.pos_y = %d\n", data->player.pos_x, data->player.pos_y);
 	if (key == XK_w || key == XK_a || key == XK_s || key == XK_d)
 		move_player(key, data);
 	if (key == XK_Escape && data->win_ptr)

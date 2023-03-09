@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:31:40 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/02 17:45:31 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/09 11:33:32 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	find_px(t_data **data)
 			if ((*data)->map_copy[map.y][map.x] == 'P')
 			{
 				(*data)->player.pos_x = map.x;
-				printf("x == %d\n", (*data)->player.pos_x);
 				return (map.x) ;
 			}
 		}
@@ -67,7 +66,6 @@ int	find_py(t_data **data)
 			if ((*data)->map_copy[map.y][map.x] == 'P')
 			{
 				(*data)->player.pos_y = map.y;
-				printf("y == %d\n", (*data)->player.pos_y);
 				return (map.y) ;
 			}
 		}

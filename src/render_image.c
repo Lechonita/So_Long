@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 11:17:18 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/02 16:35:42 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/09 14:22:30 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	xpm_wall_images(t_data *data)
 		data->mlx_ptr, data->img.w_bottomright, &width, &height);
 	data->img.w_bottomleft = mlx_xpm_file_to_image(
 		data->mlx_ptr, data->img.w_bottomleft, &width, &height);
-	if (!data->img.w_top || !data->img.w_bottom || !data->img.w_right || !data->img.w_left
-		|| !data->img.w_topright || !data->img.w_topleft || !data->img.w_bottomright
-		|| !data->img.w_bottomleft)
+	if (!data->img.w_top || !data->img.w_bottom || !data->img.w_right
+		|| !data->img.w_left || !data->img.w_topright || !data->img.w_topleft
+		|| !data->img.w_bottomright	|| !data->img.w_bottomleft)
 		free_all_exit(ERROR_IMG_WALL_CONVERT, data);
 }
 
@@ -64,16 +64,15 @@ void	xpm_images(t_data *data)
 		data->mlx_ptr, data->img.e_open, &width, &height);
 	data->img.e_closed = mlx_xpm_file_to_image(
 		data->mlx_ptr, data->img.e_closed, &width, &height);
-	data->img.p_right = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->img.p_right, &width, &height);
-	data->img.p_left = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->img.p_left, &width, &height);
+	data->player.p_idle = mlx_xpm_file_to_image(
+		data->mlx_ptr, data->player.p_idle, &width, &height);
 	data->img.f = mlx_xpm_file_to_image(
 		data->mlx_ptr, data->img.f, &width, &height);
 	data->img.o = mlx_xpm_file_to_image(
 		data->mlx_ptr, data->img.o, &width, &height);
-	if (!data->img.c || !data->img.e_closed || !data->img.p_right || !data->img.w_top
-		|| !data->img.f || !data->img.o)
+	if (!data->img.c || !data->img.e_closed || !data->player.p_idle
+		|| !data->img.e_open || !data->img.w_top || !data->img.f
+		|| !data->img.o)
 		free_all_exit(ERROR_IMG_CONVERT, data);
 	xpm_wall_images(data);
 }

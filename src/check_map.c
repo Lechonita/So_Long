@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:33:06 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/02 17:45:55 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/09 11:33:43 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,4 @@ void	check_map(t_data *data)
 	check_map_walls(&data);
 	check_map_valid_path(&data);
 	count_collectibles(data);
-	printf("collectiblles = %d\n", data->collectibles);
 }

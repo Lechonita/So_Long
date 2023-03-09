@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:11:45 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/02 17:55:23 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/09 14:23:04 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,8 @@ void	free_img(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->img.e_open);
 	if (data->img.e_closed)
 		mlx_destroy_image(data->mlx_ptr, data->img.e_closed);
-	if (data->img.p_right)
-		mlx_destroy_image(data->mlx_ptr, data->img.p_right);
-	if (data->img.p_left)
-		mlx_destroy_image(data->mlx_ptr, data->img.p_left);
+	if (data->player.p_idle)
+		mlx_destroy_image(data->mlx_ptr, data->player.p_idle);
 	if (data->img.f)
 		mlx_destroy_image(data->mlx_ptr, data->img.f);
 	if (data->img.o)

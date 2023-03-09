@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/02 17:55:35 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:00:00 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 # endif
 
 # define TITLE "So Long Suckers"
-// # define WIN_WIDTH 2240
-// # define WIN_HEIGHT 1080
 
 # define GREEN 0x008000
 # define RED 0x00FF0000
@@ -39,6 +37,7 @@
 # define WHITE 0xFFFFFF
 
 # define SIZE_PXL 64
+# define SPEED_P 3
 
 # define ERROR_ARGC "Error\n >> Not enough arguments to launch program\n"
 # define ERROR_INIT_MLX "Error\n >> MLX could not be initialized\n"
@@ -57,12 +56,13 @@
 # define ERROR_INVALID_ROUTE "Error\n >> This map has no possible path\n"
 # define ERROR_IMG_CONVERT "Error\n >> Could not convert xpm non-wall image\n"
 # define ERROR_IMG_WALL_CONVERT "Error\n >> Could not convert xpm wall image\n"
-# define WIN "\n\n  ===> YOU IN ! <===\n\n"
+# define WIN "\n\n  ===> YOU WIN ! <===\n\n"
 
 typedef struct s_player
 {
 	int 	pos_x;
 	int 	pos_y;
+	char	*p_idle;
 	char	*p1_right;
 	char	*p2_right;
 	char	*p3_right;
@@ -80,8 +80,6 @@ typedef struct s_img
 	char	*c;
 	char	*e_open;
 	char	*e_closed;
-	char	*p_right;
-	char	*p_left;
 	char	*w_top;
 	char	*w_bottom;
 	char	*w_right;
@@ -139,7 +137,7 @@ int		keypress(int key, t_data *data);
 int		buttonpress(t_data *data);
 
 /* PLAYER */
-void	do_movement(t_data *data, int x, int y);
+void	do_movement(t_data *data, int x, int y, int key);
 int		move_ok(t_data *data, int x, int y, int key);
 void	move_player(int key, t_data *data);
 
