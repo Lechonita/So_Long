@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 11:17:18 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/09 16:14:22 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:37:57 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,21 @@ void	xpm_player_images(t_data *data)
 	int	width;
 	int	height;
 
-	data->player.p1_right = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->player.p1_right, &width, &height);
-	data->player.p2_right = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->player.p2_right, &width, &height);
-	data->player.p3_right = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->player.p3_right, &width, &height);
-	data->player.p1_left = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->player.p1_left, &width, &height);
-	data->player.p2_left = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->player.p2_left, &width, &height);
-	data->player.p3_left = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->player.p3_left, &width, &height);
-	if (!data->player.p1_right || !data->player.p2_right
-		|| !data->player.p3_right || !data->player.p1_left
-		|| !data->player.p2_left || !data->player.p3_left)
+	data->player.p_right_1 = mlx_xpm_file_to_image(
+		data->mlx_ptr, data->player.p_right_1, &width, &height);
+	data->player.p_right_2 = mlx_xpm_file_to_image(
+		data->mlx_ptr, data->player.p_right_2, &width, &height);
+	data->player.p_right_3 = mlx_xpm_file_to_image(
+		data->mlx_ptr, data->player.p_right_3, &width, &height);
+	data->player.p_left_1 = mlx_xpm_file_to_image(
+		data->mlx_ptr, data->player.p_left_1, &width, &height);
+	data->player.p_left_2 = mlx_xpm_file_to_image(
+		data->mlx_ptr, data->player.p_left_2, &width, &height);
+	data->player.p_left_3 = mlx_xpm_file_to_image(
+		data->mlx_ptr, data->player.p_left_3, &width, &height);
+	if (!data->player.p_right_1 || !data->player.p_right_2
+		|| !data->player.p_right_3 || !data->player.p_left_1
+		|| !data->player.p_left_2 || !data->player.p_left_3)
 		free_all_exit(ERROR_IMG_PLAYER_CONVERT, data);
 }
 

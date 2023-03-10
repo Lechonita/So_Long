@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:27:31 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/09 14:17:23 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:46:32 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	image_center(t_data *data, int y, int x)
 	else if (data->map[y][x] == '0')
 		mlx_put_image_to_window(
 			data->mlx_ptr, data->win_ptr, data->img.f, x * SIZE_PXL, y * SIZE_PXL);
+	else if (data->map[y][x] == 'M')
+		put_sprites("./images_xpm/enemy_", data, y, x);
 }
 
 // void	choose_image(t_data *data, int y, int x)

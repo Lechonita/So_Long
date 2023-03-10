@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/09 16:12:10 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:30:23 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@
 # define WHITE 0xFFFFFF
 
 # define SIZE_PXL 64
-# define SPEED_P 3
+# define SPEED_P 4
+# define ENEMY 5
 
 # define ERROR_ARGC "Error\n >> Not enough arguments to launch program\n"
 # define ERROR_INIT_MLX "Error\n >> MLX could not be initialized\n"
@@ -60,17 +61,23 @@
 # define ERROR_IMG_PLAYER_CONVERT "Error\n >> Could not convert xpm player image\n"
 # define WIN "\n\n  ===> YOU WIN ! <===\n\n"
 
+typedef struct s_animation
+{
+	char					*sprite;
+	struct s_animation		*next;
+} t_animation;
+
 typedef struct s_player
 {
 	int 	pos_x;
 	int 	pos_y;
 	char	*p_idle;
-	char	*p1_right;
-	char	*p2_right;
-	char	*p3_right;
-	char	*p1_left;
-	char	*p2_left;
-	char	*p3_left;
+	char	*p_right_1;
+	char	*p_right_2;
+	char	*p_right_3;
+	char	*p_left_1;
+	char	*p_left_2;
+	char	*p_left_3;
 }	t_player;
 
 typedef struct s_img
@@ -115,6 +122,7 @@ typedef struct s_data
 	t_img		img;
 	t_win		win;
 	t_player	player;
+	t_animation	animation;
 }	t_data;
 
 typedef struct s_map
@@ -144,6 +152,7 @@ int		move_ok(t_data *data, int x, int y, int key);
 void	move_player(int key, t_data *data);
 
 /* UTILS */
+char	*ft_strjoin_char(const char *s, int i);
 void	exit_error(t_data *data, char *error_message);
 int		get_width(t_data *data,char *map_filename);
 int		get_height(t_data *data,char *map_filename);
@@ -172,17 +181,19 @@ void	free_all_exit(char	*error_message, t_data *data);
 void	free_close(t_data *data);
 
 /* ANIMATION */
-void	animate_player_left(t_data *data, int x, int y);
+// void			animate_player_left(t_data *data, int x, int y);
+t_animation		*create_sprites(char *filename, t_data *data);
+void			put_sprites(char *filename, t_data *data, int y, int x);
 
 /************************************************************/
 /**************************** MAP ***************************/
 /************************************************************/
 
 /* INIT MAP */
-void	check_map_walls(t_data **data);
-int		check_map_top_bottom(t_data **data);
-char	**get_map(t_data *data, char *map_filename);
-void	map_filename(t_data *data, char *argv);
+void			check_map_walls(t_data **data);
+int				check_map_top_bottom(t_data **data);
+char			**get_map(t_data *data, char *map_filename);
+void			map_filename(t_data *data, char *argv);
 
 /* CHECK MAP */
 void	count_collectibles(t_data *data);

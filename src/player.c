@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:33:34 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/09 16:19:13 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:46:13 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,15 @@
 
 void	do_movement(t_data *data, int x, int y, int key)
 {
-
 	// if (key == XK_a)
-
-	if (key == XK_a)
-		animate_player_left(data, x, y);
+	// 	animate_player_left(data, x, y);
+	(void)key;
 	data->map[data->player.pos_y][data->player.pos_x] = '0';
 	data->map[y][x] = 'P';
 	data->player.pos_x = x;
 	data->player.pos_y = y;
 	data->moves += 1;
 	ft_printf("Move #%d\n", data->moves);
-	display_map(data);
 }
 
 int	move_ok(t_data *data, int x, int y, int key)
@@ -64,7 +61,7 @@ void 	move_player(int key, t_data *data)
 	else if (key == XK_a)
 	{
 		data->player.p_idle = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/p1_left.xpm", &width, &height);
+			data->mlx_ptr, "./images_xpm/p_left_1.xpm", &width, &height);
 		x--;
 	}
 	else if (key == XK_s)
@@ -72,7 +69,7 @@ void 	move_player(int key, t_data *data)
 	else if (key == XK_d)
 	{
 		data->player.p_idle = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/p1_right.xpm", &width, &height);
+			data->mlx_ptr, "./images_xpm/p_right_1.xpm", &width, &height);
 		x++;
 	}
 	if (!move_ok(data, x, y, key))

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:47:09 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/09 14:15:36 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:37:57 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	init_player_struct(t_data *data)
 {
 	data->player.pos_x = 0;
 	data->player.pos_y = 0;
-	data->player.p_idle = "./images_xpm/p1_right.xpm";
-	data->player.p1_right = "./images_xpm/p1_right.xpm";
-	data->player.p2_right = "./images_xpm/p2_right.xpm";
-	data->player.p3_right = "./images_xpm/p3_right.xpm";
-	data->player.p1_left = "./images_xpm/p1_left.xpm";
-	data->player.p2_left = "./images_xpm/p2_left.xpm";
-	data->player.p3_left = "./images_xpm/p3_left.xpm";
+	data->player.p_idle = "./images_xpm/p_right_1.xpm";
+	data->player.p_right_1 = "./images_xpm/p_right_1.xpm";
+	data->player.p_right_2 = "./images_xpm/p_right_2.xpm";
+	data->player.p_right_3 = "./images_xpm/p_right_3.xpm";
+	data->player.p_left_1 = "./images_xpm/p_left_1.xpm";
+	data->player.p_left_2 = "./images_xpm/p_left_2.xpm";
+	data->player.p_left_3 = "./images_xpm/p_left_3.xpm";
 }
 
 void	init_img_struct(t_data *data)

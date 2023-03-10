@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:33:06 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/09 11:33:43 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:32:02 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	check_map_chars(t_data **data)
 			else if ((*data)->map[map.y][map.x] == 'P')
 				map.p += 1;
 			else if ((*data)->map[map.y][map.x] != '1'
-				&& (*data)->map[map.y][map.x] != '0')
+				&& (*data)->map[map.y][map.x] != '0'
+				&& (*data)->map[map.y][map.x] != 'M')
 				map_error_elements(*data);
 			map.x++;
 		}

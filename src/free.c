@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:11:45 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/09 16:11:30 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:37:57 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,18 @@ void	free_img(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->img.f);
 	if (data->img.o)
 		mlx_destroy_image(data->mlx_ptr, data->img.o);
-	if (data->player.p1_right)
-		mlx_destroy_image(data->mlx_ptr, data->player.p1_right);
-	if (data->player.p2_right)
-		mlx_destroy_image(data->mlx_ptr, data->player.p2_right);
-	if (data->player.p3_right)
-		mlx_destroy_image(data->mlx_ptr, data->player.p3_right);
-	if (data->player.p1_left)
-		mlx_destroy_image(data->mlx_ptr, data->player.p1_left);
-	if (data->player.p2_left)
-		mlx_destroy_image(data->mlx_ptr, data->player.p2_left);
-	if (data->player.p3_left)
-		mlx_destroy_image(data->mlx_ptr, data->player.p3_left);
+	if (data->player.p_right_1)
+		mlx_destroy_image(data->mlx_ptr, data->player.p_right_1);
+	if (data->player.p_right_2)
+		mlx_destroy_image(data->mlx_ptr, data->player.p_right_2);
+	if (data->player.p_right_3)
+		mlx_destroy_image(data->mlx_ptr, data->player.p_right_3);
+	if (data->player.p_left_1)
+		mlx_destroy_image(data->mlx_ptr, data->player.p_left_1);
+	if (data->player.p_left_2)
+		mlx_destroy_image(data->mlx_ptr, data->player.p_left_2);
+	if (data->player.p_left_3)
+		mlx_destroy_image(data->mlx_ptr, data->player.p_left_3);
 }
 
 void	free_wall_img(t_data *data)
