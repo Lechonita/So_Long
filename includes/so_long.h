@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/10 15:30:23 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:16:19 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,34 +50,25 @@
 # define ERROR_MAP_ECP "Error\n >> Wrong quantity of Start, Exit and/or Item\n"
 # define ERROR_MAP_WALLS "Error\n >> Map walls are incomplete\n"
 # define ERROR_MAP_FD "Error\n >> Map file could not be opened\n"
-// # define ERROR_MAP_FDW "Error\n >> Map file could not be opened (width)\n"
-// # define ERROR_MAP_FDH "Error\n >> Map file could not be opened (height)\n"
 # define ERROR_MAP_EMPTY "Error\n >> Map file is empty\n"
 # define ERROR_MAP_SHAPE "Error\n >> Map shape incorrect\n"
 # define ERROR_MAP_COPY "Error\n >> Map could not be copied\n"
 # define ERROR_INVALID_ROUTE "Error\n >> This map has no possible path\n"
 # define ERROR_IMG_CONVERT "Error\n >> Could not convert xpm non-wall image\n"
 # define ERROR_IMG_WALL_CONVERT "Error\n >> Could not convert xpm wall image\n"
-# define ERROR_IMG_PLAYER_CONVERT "Error\n >> Could not convert xpm player image\n"
+# define ERROR_IMG_WALK_CONVERT "Error\n >> Could not convert xpm walk image\n"
+# define ERROR_IMG_IDLE_CONVERT "Error\n >> Could not convert xpm idle image\n"
 # define WIN "\n\n  ===> YOU WIN ! <===\n\n"
-
-typedef struct s_animation
-{
-	char					*sprite;
-	struct s_animation		*next;
-} t_animation;
 
 typedef struct s_player
 {
 	int 	pos_x;
 	int 	pos_y;
-	char	*p_idle;
-	char	*p_right_1;
-	char	*p_right_2;
-	char	*p_right_3;
-	char	*p_left_1;
-	char	*p_left_2;
-	char	*p_left_3;
+	int 	direction;
+	int		p_animate;
+	void	*p_image;
+	void	*p_idle[10];
+	void	*p_walk[6];
 }	t_player;
 
 typedef struct s_img
@@ -86,19 +77,19 @@ typedef struct s_img
 	// int		bpp; /* bits per pixel */
 	// int		line_len;
 	// int		endian;
-	char	*c;
-	char	*e_open;
-	char	*e_closed;
-	char	*w_top;
-	char	*w_bottom;
-	char	*w_right;
-	char	*w_left;
-	char	*w_topright;
-	char	*w_topleft;
-	char	*w_bottomright;
-	char	*w_bottomleft;
-	char	*f;
-	char	*o;
+	void	*c;
+	void	*e_open;
+	void	*e_closed;
+	void	*w_top;
+	void	*w_bottom;
+	void	*w_right;
+	void	*w_left;
+	void	*w_topright;
+	void	*w_topleft;
+	void	*w_bottomright;
+	void	*w_bottomleft;
+	void	*f;
+	void	*o;
 }	t_img;
 
 typedef struct s_win
@@ -122,7 +113,6 @@ typedef struct s_data
 	t_img		img;
 	t_win		win;
 	t_player	player;
-	t_animation	animation;
 }	t_data;
 
 typedef struct s_map
@@ -133,7 +123,6 @@ typedef struct s_map
 	int		e;
 	int		p;
 }	t_map;
-
 
 /* INIT */
 void	init_win_struct(t_data *data);
@@ -152,7 +141,6 @@ int		move_ok(t_data *data, int x, int y, int key);
 void	move_player(int key, t_data *data);
 
 /* UTILS */
-char	*ft_strjoin_char(const char *s, int i);
 void	exit_error(t_data *data, char *error_message);
 int		get_width(t_data *data,char *map_filename);
 int		get_height(t_data *data,char *map_filename);
@@ -161,7 +149,9 @@ void	display_map(t_data *data);
 
 /* IMAGE */
 int		display_game(t_data *data);
-void	xpm_player_images(t_data *data);
+int		loop_hook(t_data *data);
+void	xpm_playeridle_images(t_data *data);
+void	xpm_playerwalk_images(t_data *data);
 void	xpm_wall_images(t_data *data);
 void	xpm_images(t_data *data);
 
@@ -181,9 +171,8 @@ void	free_all_exit(char	*error_message, t_data *data);
 void	free_close(t_data *data);
 
 /* ANIMATION */
-// void			animate_player_left(t_data *data, int x, int y);
-t_animation		*create_sprites(char *filename, t_data *data);
-void			put_sprites(char *filename, t_data *data, int y, int x);
+void	animate_player(t_data *data, int fno);
+void	idle_player(t_data *data, int fno);
 
 /************************************************************/
 /**************************** MAP ***************************/

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:33:06 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/10 14:32:02 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/13 11:47:48 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	check_map_chars(t_data **data)
 	map.c = 0;
 	map.e = 0;
 	map.p = 0;
-	map.y = 0;
-	while (map.y < (*data)->height)
+	map.y = -1;
+	while (++map.y < (*data)->height)
 	{
-		map.x = 0;
-		while ((*data)->map[map.y][map.x])
+		map.x = -1;
+		while ((*data)->map[map.y][++map.x])
 		{
 			if ((*data)->map[map.y][map.x] == 'C')
 				map.c += 1;
@@ -63,9 +63,7 @@ void	check_map_chars(t_data **data)
 				&& (*data)->map[map.y][map.x] != '0'
 				&& (*data)->map[map.y][map.x] != 'M')
 				map_error_elements(*data);
-			map.x++;
 		}
-		map.y++;
 	}
 	if (!map.c || map.e != 1 || map.p != 1)
 		exit_error (*data, ERROR_MAP_ECP);
@@ -75,15 +73,14 @@ void	check_map_shape(t_data **data)
 {
 	t_map	map;
 
-	map.y = 0;
-	while(map.y < (*data)->height)
+	map.y = -1;
+	while(++map.y < (*data)->height)
 	{
 		if (ft_strlen((*data)->map[map.y]) != (*data)->width)
 		{
 			free_map(*data);
 			exit_error(*data, ERROR_MAP_SHAPE);
 		}
-		map.y++;
 	}
 }
 

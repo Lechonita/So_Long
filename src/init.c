@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:47:09 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/10 13:37:57 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:26:11 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,30 @@ void	init_player_struct(t_data *data)
 {
 	data->player.pos_x = 0;
 	data->player.pos_y = 0;
-	data->player.p_idle = "./images_xpm/p_right_1.xpm";
-	data->player.p_right_1 = "./images_xpm/p_right_1.xpm";
-	data->player.p_right_2 = "./images_xpm/p_right_2.xpm";
-	data->player.p_right_3 = "./images_xpm/p_right_3.xpm";
-	data->player.p_left_1 = "./images_xpm/p_left_1.xpm";
-	data->player.p_left_2 = "./images_xpm/p_left_2.xpm";
-	data->player.p_left_3 = "./images_xpm/p_left_3.xpm";
+	data->player.direction = 0;
+	data->player.p_animate = 0;
+	data->player.p_image = "./images_xpm/p_right_1.xpm";
+	data->player.p_idle[0] = "./images_xpm/p_idle_right_1.xpm";
+	data->player.p_idle[1] = "./images_xpm/p_idle_right_2.xpm";
+	data->player.p_idle[2] = "./images_xpm/p_idle_right_3.xpm";
+	data->player.p_idle[3] = "./images_xpm/p_idle_right_4.xpm";
+	data->player.p_idle[4] = "./images_xpm/p_idle_right_5.xpm";
+	data->player.p_idle[5] = "./images_xpm/p_idle_left_1.xpm";
+	data->player.p_idle[6] = "./images_xpm/p_idle_left_2.xpm";
+	data->player.p_idle[7] = "./images_xpm/p_idle_left_3.xpm";
+	data->player.p_idle[8] = "./images_xpm/p_idle_left_4.xpm";
+	data->player.p_idle[9] = "./images_xpm/p_idle_left_5.xpm";
+	data->player.p_walk[0] = "./images_xpm/p_right_1.xpm";
+	data->player.p_walk[1] = "./images_xpm/p_right_2.xpm";
+	data->player.p_walk[2] = "./images_xpm/p_right_3.xpm";
+	data->player.p_walk[3] = "./images_xpm/p_left_1.xpm";
+	data->player.p_walk[4] = "./images_xpm/p_left_2.xpm";
+	data->player.p_walk[5] = "./images_xpm/p_left_3.xpm";
 }
 
 void	init_img_struct(t_data *data)
 {
-	data->img.c = "./images_xpm/collectible.xpm";
+	data->img.c = "./images_xpm/map/collectible.xpm";
 	data->img.e_open = "./images_xpm/door_open.xpm";
 	data->img.e_closed = "./images_xpm/door_closed.xpm";
 	data->img.w_top = "./images_xpm/top_wall.xpm";

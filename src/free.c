@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:11:45 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/10 13:37:57 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:52:25 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,24 @@ void	free_img(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->img.e_open);
 	if (data->img.e_closed)
 		mlx_destroy_image(data->mlx_ptr, data->img.e_closed);
-	if (data->player.p_idle)
-		mlx_destroy_image(data->mlx_ptr, data->player.p_idle);
+	if (data->player.p_image)
+		mlx_destroy_image(data->mlx_ptr, data->player.p_image);
 	if (data->img.f)
 		mlx_destroy_image(data->mlx_ptr, data->img.f);
 	if (data->img.o)
 		mlx_destroy_image(data->mlx_ptr, data->img.o);
-	if (data->player.p_right_1)
-		mlx_destroy_image(data->mlx_ptr, data->player.p_right_1);
-	if (data->player.p_right_2)
-		mlx_destroy_image(data->mlx_ptr, data->player.p_right_2);
-	if (data->player.p_right_3)
-		mlx_destroy_image(data->mlx_ptr, data->player.p_right_3);
-	if (data->player.p_left_1)
-		mlx_destroy_image(data->mlx_ptr, data->player.p_left_1);
-	if (data->player.p_left_2)
-		mlx_destroy_image(data->mlx_ptr, data->player.p_left_2);
-	if (data->player.p_left_3)
-		mlx_destroy_image(data->mlx_ptr, data->player.p_left_3);
+	if (data->player.p_walk[0])
+		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[0]);
+	if (data->player.p_walk[1])
+		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[1]);
+	if (data->player.p_walk[2])
+		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[2]);
+	if (data->player.p_walk[3])
+		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[3]);
+	if (data->player.p_walk[4])
+		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[4]);
+	if (data->player.p_walk[5])
+		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[5]);
 }
 
 void	free_wall_img(t_data *data)

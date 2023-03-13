@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:33:34 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/10 14:46:13 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:52:25 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	do_movement(t_data *data, int x, int y, int key)
 {
-	// if (key == XK_a)
-	// 	animate_player_left(data, x, y);
 	(void)key;
 	data->map[data->player.pos_y][data->player.pos_x] = '0';
 	data->map[y][x] = 'P';
@@ -56,11 +54,14 @@ void 	move_player(int key, t_data *data)
 
 	x = data->player.pos_x;
 	y = data->player.pos_y;
+	data->player.p_animate = 0;
 	if (key == XK_w)
 		y--;
 	else if (key == XK_a)
 	{
-		data->player.p_idle = mlx_xpm_file_to_image(
+		data->player.p_animate = 1;
+		data->player.direction = 1;
+		data->player.p_image = mlx_xpm_file_to_image(
 			data->mlx_ptr, "./images_xpm/p_left_1.xpm", &width, &height);
 		x--;
 	}
@@ -68,7 +69,9 @@ void 	move_player(int key, t_data *data)
 		y++;
 	else if (key == XK_d)
 	{
-		data->player.p_idle = mlx_xpm_file_to_image(
+		data->player.p_animate = 1;
+		data->player.direction = 0;
+		data->player.p_image = mlx_xpm_file_to_image(
 			data->mlx_ptr, "./images_xpm/p_right_1.xpm", &width, &height);
 		x++;
 	}

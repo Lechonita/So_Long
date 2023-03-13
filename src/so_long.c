@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:55 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/02 17:48:47 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:17:29 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,13 @@ int	main(int argc, char **argv)
 	xpm_images(data);
 
 	/* hooks */
-	mlx_loop_hook(data->mlx_ptr, &display_game, data);
+	mlx_loop_hook(data->mlx_ptr, &loop_hook, data);
+	printf("TEST\n");
 	mlx_key_hook(data->win_ptr, &keypress, data);
+	printf("TEST\n");
 	mlx_hook(data->win_ptr, ClientMessage, LeaveWindowMask,
 		&buttonpress, data);
+	printf("TEST\n");
 
 	mlx_loop(data->mlx_ptr);
 
