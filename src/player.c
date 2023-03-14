@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:33:34 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/13 16:52:25 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:20:22 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	do_movement(t_data *data, int x, int y, int key)
 	data->player.pos_x = x;
 	data->player.pos_y = y;
 	data->moves += 1;
+	// count_movement(data);
 	ft_printf("Move #%d\n", data->moves);
 }
 
@@ -49,32 +50,24 @@ void 	move_player(int key, t_data *data)
 {
 	int	x;
 	int	y;
-	int	width;
-	int	height;
 
 	x = data->player.pos_x;
 	y = data->player.pos_y;
-	data->player.p_animate = 0;
 	if (key == XK_w)
 		y--;
 	else if (key == XK_a)
 	{
-		data->player.p_animate = 1;
 		data->player.direction = 1;
-		data->player.p_image = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/p_left_1.xpm", &width, &height);
 		x--;
 	}
 	else if (key == XK_s)
 		y++;
 	else if (key == XK_d)
 	{
-		data->player.p_animate = 1;
 		data->player.direction = 0;
-		data->player.p_image = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/p_right_1.xpm", &width, &height);
 		x++;
 	}
+	data->player.p_animate = 1;
 	if (!move_ok(data, x, y, key))
 		do_movement(data, x, y, key);
 }

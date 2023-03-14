@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:27:31 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/13 16:52:25 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:00:28 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,10 @@ void	image_center(t_data *data, int y, int x)
 	else if (data->map[y][x] == 'E' && data->collectibles == 0)
 		mlx_put_image_to_window(
 			data->mlx_ptr, data->win_ptr, data->img.e_open, x * SIZE_PXL, y * SIZE_PXL);
-	else if (data->map[y][x] == 'P')
-		mlx_put_image_to_window(
-			data->mlx_ptr, data->win_ptr, data->player.p_image, x * SIZE_PXL, y * SIZE_PXL);
 	else if (data->map[y][x] == '1')
 		mlx_put_image_to_window(
 			data->mlx_ptr, data->win_ptr, data->img.o, x * SIZE_PXL, y * SIZE_PXL);
-	else if (data->map[y][x] == '0')
+	else if (data->map[y][x] == '0' || data->map[y][x] == 'P')
 		mlx_put_image_to_window(
 			data->mlx_ptr, data->win_ptr, data->img.f, x * SIZE_PXL, y * SIZE_PXL);
 	// else if (data->map[y][x] == 'M')

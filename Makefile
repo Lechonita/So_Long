@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/03/13 12:07:49 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/03/14 18:21:56 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,6 @@ SRC = so_long.c \
 		choose_image.c \
 		init.c \
 		player.c \
-		flood.c \
 		animation.c
 SRC2 = $(addprefix $(SRC_PATH), $(SRC))
 
@@ -139,7 +138,8 @@ clean:
 	@echo "$(_CYAN)🚿🛁 ✧ ALL CLEANED ✧ 🛁🚿\n${_END}"
 
 fclean: clean
-	@make fclean -sC $(LIBFT_PATH) $(PRINTF_PATH)
+	@make fclean -sC $(LIBFT_PATH)
+	@make fclean -sC $(PRINTF_PATH)
 	@rm -f $(NAME)
 
 re: fclean all

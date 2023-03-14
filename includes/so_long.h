@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/13 17:16:19 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:11:33 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@
 # define WHITE 0xFFFFFF
 
 # define SIZE_PXL 64
-# define SPEED_P 4
-# define ENEMY 5
+# define RATE 6000
 
 # define ERROR_ARGC "Error\n >> Not enough arguments to launch program\n"
 # define ERROR_INIT_MLX "Error\n >> MLX could not be initialized\n"
@@ -58,7 +57,15 @@
 # define ERROR_IMG_WALL_CONVERT "Error\n >> Could not convert xpm wall image\n"
 # define ERROR_IMG_WALK_CONVERT "Error\n >> Could not convert xpm walk image\n"
 # define ERROR_IMG_IDLE_CONVERT "Error\n >> Could not convert xpm idle image\n"
+# define ERROR_IMG_NBR_CONVERT "Error\n >> Could not convert xpm nbr image\n"
 # define WIN "\n\n  ===> YOU WIN ! <===\n\n"
+# define QUIT "\n  EXIT GAME\n"
+
+typedef struct s_bonus
+{
+	// void	*enemy;
+	void	*numbers[10];
+}	t_bonus;
 
 typedef struct s_player
 {
@@ -66,9 +73,8 @@ typedef struct s_player
 	int 	pos_y;
 	int 	direction;
 	int		p_animate;
-	void	*p_image;
 	void	*p_idle[10];
-	void	*p_walk[6];
+	void	*p_walk[8];
 }	t_player;
 
 typedef struct s_img
@@ -108,11 +114,13 @@ typedef struct s_data
 	int			height;
 	int			width;
 	int			moves;
+	int			loop_count;
 	int			collectibles;
 	int			game_finish;
 	t_img		img;
 	t_win		win;
 	t_player	player;
+	t_bonus		bonus;
 }	t_data;
 
 typedef struct s_map
@@ -125,8 +133,9 @@ typedef struct s_map
 }	t_map;
 
 /* INIT */
-void	init_win_struct(t_data *data);
-void	init_player_struct(t_data *data);
+// void	init_win_struct(t_data *data);
+void	init_player_walk(t_data *data);
+void	init_player_idle(t_data *data);
 void	init_img_struct(t_data *data);
 void	init_data_struct(t_data *data, char *map_filename);
 void	init_struct(t_data *data, char *map_filename);
@@ -144,14 +153,16 @@ void	move_player(int key, t_data *data);
 void	exit_error(t_data *data, char *error_message);
 int		get_width(t_data *data,char *map_filename);
 int		get_height(t_data *data,char *map_filename);
+int		find_px(t_data *data);
+int		find_py(t_data *data);
 
 void	display_map(t_data *data);
 
 /* IMAGE */
 int		display_game(t_data *data);
-int		loop_hook(t_data *data);
-void	xpm_playeridle_images(t_data *data);
-void	xpm_playerwalk_images(t_data *data);
+void	xpm_numbers_images(t_data *data);
+void	xpm_idle_images(t_data *data);
+void	xpm_walk_images(t_data *data);
 void	xpm_wall_images(t_data *data);
 void	xpm_images(t_data *data);
 
@@ -165,24 +176,28 @@ void	choose_image(t_data *data, int y, int x);
 /* FREE */
 void	free_both_maps(t_data *data);
 void	free_map(t_data *data);
+void	free_numbers_img(t_data *data);
 void	free_img(t_data *data);
 void	free_wall_img(t_data *data);
 void	free_all_exit(char	*error_message, t_data *data);
 void	free_close(t_data *data);
 
 /* ANIMATION */
-void	animate_player(t_data *data, int fno);
-void	idle_player(t_data *data, int fno);
+void	walk_player_left(t_data *data);
+void	walk_player_right(t_data *data);
+void	idle_player_left(t_data *data);
+void	idle_player_right(t_data *data);
+int		render_sprites(t_data *data);
 
 /************************************************************/
 /**************************** MAP ***************************/
 /************************************************************/
 
 /* INIT MAP */
-void			check_map_walls(t_data **data);
-int				check_map_top_bottom(t_data **data);
-char			**get_map(t_data *data, char *map_filename);
-void			map_filename(t_data *data, char *argv);
+void	check_map_walls(t_data **data);
+int		check_map_top_bottom(t_data **data);
+char	**get_map(t_data *data, char *map_filename);
+void	map_filename(t_data *data, char *argv);
 
 /* CHECK MAP */
 void	count_collectibles(t_data *data);
@@ -193,14 +208,10 @@ void	check_map(t_data *data);
 
 /* VALID MAP ROUTE */
 int		is_path_valid(t_data *data);
-int		find_px(t_data **data);
-int		find_py(t_data **data);
-void	copy_map(t_data **data);
-void	check_map_valid_path(t_data **data);
-
-/* FLOOD */
 void	flood_map(t_data **data, int y, int x);
 void	flood_y(t_data **data, int x, int y);
+void	copy_map(t_data **data);
+void	check_map_valid_path(t_data **data);
 
 /* GNL */
 char	*ft_free_strjoin(char *s1, char *s2);

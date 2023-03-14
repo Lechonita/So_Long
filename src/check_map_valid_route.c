@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:31:40 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/09 11:33:32 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:46:07 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,44 +33,46 @@ int	is_path_valid(t_data *data)
 	return (0);
 }
 
-int	find_px(t_data **data)
+void	flood_map(t_data **data, int y, int x)
 {
-	t_map	map;
-
-	map.y = -1;
-	while ((*data)->map_copy[++map.y])
+	if ((*data)->map_copy[y][x + 1]
+		&& (*data)->map_copy[y][x + 1] != '1'
+		&& (*data)->map_copy[y][x + 1] != 'M'
+		&& (*data)->map_copy[y][x + 1] != 'x')
 	{
-		map.x = -1;
-		while ((*data)->map_copy[map.y][++map.x])
-		{
-			if ((*data)->map_copy[map.y][map.x] == 'P')
-			{
-				(*data)->player.pos_x = map.x;
-				return (map.x) ;
-			}
-		}
+		(*data)->map_copy[y][x + 1] = 'x';
+		flood_map(data, y, (x + 1));
 	}
-	return (0);
+	if ((*data)->map_copy[y][x - 1]
+		&& (*data)->map_copy[y][x - 1] != '1'
+		&& (*data)->map_copy[y][x - 1] != 'M'
+		&& (*data)->map_copy[y][x - 1] != 'x')
+	{
+		(*data)->map_copy[y][x - 1] = 'x';
+		flood_map(data, y, (x - 1));
+	}
+	else
+		flood_y(data, y, x);
 }
 
-int	find_py(t_data **data)
+void	flood_y(t_data **data, int y, int x)
 {
-	t_map	map;
-
-	map.y = -1;
-	while ((*data)->map_copy[++map.y])
+	if ((*data)->map_copy[y + 1][x]
+		&& (*data)->map_copy[y + 1][x] != '1'
+		&& (*data)->map_copy[y + 1][x] != 'M'
+		&& (*data)->map_copy[y + 1][x] != 'x')
 	{
-		map.x = -1;
-		while ((*data)->map_copy[map.y][++map.x])
-		{
-			if ((*data)->map_copy[map.y][map.x] == 'P')
-			{
-				(*data)->player.pos_y = map.y;
-				return (map.y) ;
-			}
-		}
+		(*data)->map_copy[y + 1][x] = 'x';
+		flood_map(data, (y + 1), x);
 	}
-	return (0);
+	if ((*data)->map_copy[y - 1][x]
+		&& (*data)->map_copy[y - 1][x] != '1'
+		&& (*data)->map_copy[y - 1][x] != 'M'
+		&& (*data)->map_copy[y - 1][x] != 'x')
+	{
+		(*data)->map_copy[y - 1][x] = 'x';
+		flood_map(data, (y - 1), x);
+	}
 }
 
 void	copy_map(t_data **data)
@@ -108,7 +110,7 @@ void	check_map_valid_path(t_data **data)
 	copy_map(data);
 	if (!(*data)->map_copy)
  		exit_error(*data, ERROR_MAP_COPY);
-	flood_map(data, find_py(data), find_px(data));
+	flood_map(data, find_py(*data), find_px(*data));
 	if(is_path_valid(*data))
 	{
 		free_both_maps(*data);
