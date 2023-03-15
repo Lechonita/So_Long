@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:47:09 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/14 18:07:28 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/15 17:04:02 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	init_player_walk(t_data *data)
 	data->player.p_walk[5] = "./images_xpm/player/p_walk_left_2.xpm";
 	data->player.p_walk[6] = "./images_xpm/player/p_walk_left_3.xpm";
 	data->player.p_walk[7] = "./images_xpm/player/p_walk_left_4.xpm";
-
+	data->bonus.enemy[0] = "./images_xpm/enemy/enemy_1.xpm";
+	data->bonus.enemy[1] = "./images_xpm/enemy/enemy_2.xpm";
+	data->bonus.enemy[2] = "./images_xpm/enemy/enemy_3.xpm";
 }
 
 void	init_player_idle(t_data *data)
@@ -62,6 +64,8 @@ void	init_img_struct(t_data *data)
 	data->img.c = "./images_xpm/map/collectible.xpm";
 	data->img.e_open = "./images_xpm/map/door_open.xpm";
 	data->img.e_closed = "./images_xpm/map/door_closed.xpm";
+	data->img.e_end[0] = "./images_xpm/map/door_end_right.xpm";
+	data->img.e_end[1] = "./images_xpm/map/door_end_left.xpm";
 	data->img.w_top = "./images_xpm/map/top_wall.xpm";
 	data->img.w_bottom = "./images_xpm/map/bottom_wall.xpm";
 	data->img.w_right = "./images_xpm/map/right_wall.xpm";
@@ -88,9 +92,9 @@ void	init_data_struct(t_data *data, char *map_filename)
 	data->moves = 0;
 	data->loop_count = 0;
 	data->collectibles = 0;
-	data->game_finish = 0;
-	data->win.y = data->height * SIZE_PXL;
-	data->win.x = data->width * SIZE_PXL;
+	data->finish_game = 0;
+	data->win.y = data->height * PXL;
+	data->win.x = data->width * PXL;
 }
 
 void	init_struct(t_data *data, char *map_filename)

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:55 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/14 17:28:47 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:26:14 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int	main(int argc, char **argv)
 	init_struct(data, argv[1]);
 	data->map = get_map(data, argv[1]);
 	if (!data->map)
+	{
+		free_map(data);
 		exit_error(data, ERROR_MAP_EMPTY);
+	}
 	check_map(data);
 
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->win.x, data->win.y, TITLE);
@@ -33,13 +36,12 @@ int	main(int argc, char **argv)
 		exit_error(data, ERROR_INIT_WIN);
 
 	xpm_images(data);
-	display_game(data);
 
 	/* hooks */
 	mlx_key_hook(data->win_ptr, &keypress, data);
 	mlx_hook(data->win_ptr, ClientMessage, LeaveWindowMask,
 		&buttonpress, data);
-	mlx_loop_hook(data->mlx_ptr, &render_sprites, data);
+	mlx_loop_hook(data->mlx_ptr, &render_game, data);
 
 	mlx_loop(data->mlx_ptr);
 

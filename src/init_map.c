@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:35:25 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/02 17:48:06 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:17:47 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,20 @@ char	**get_map(t_data *data, char *map_filename)
 	if (fd < 0)
 		exit_error(data, ERROR_MAP_FD);
 	map = malloc(sizeof(char *) * (data->height + 1));
-	if (!map)
-		return (NULL);
-	i = 0;
-	while (i < data->height)
-	{
-		map[i] = get_next_line(fd);
-		if (!map[i])
-			return (free_map(data), NULL);
-		if (map[i][ft_strlen(map[i]) - 1] == '\n')
-			map[i][ft_strlen(map[i]) - 1] = '\0';
-		i++;
+	if (map)
+	{	
+		i = 0;
+		while (i < data->height)
+		{
+			map[i] = get_next_line(fd);
+			if (!map[i])
+				return (free_map(data), NULL);
+			if (map[i][ft_strlen(map[i]) - 1] == '\n')
+				map[i][ft_strlen(map[i]) - 1] = '\0';
+			i++;
+		}
+		close(fd);
 	}
-	close(fd);
 	return (map);
 }
 

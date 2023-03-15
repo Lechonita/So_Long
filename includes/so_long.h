@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/14 18:11:33 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/15 17:31:21 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@
 # define BLUE 0x00FFFF
 # define WHITE 0xFFFFFF
 
-# define SIZE_PXL 64
-# define RATE 6000
+# define PXL 64
+# define NBR_PXL 16
+# define RATE 80
 
 # define ERROR_ARGC "Error\n >> Not enough arguments to launch program\n"
 # define ERROR_INIT_MLX "Error\n >> MLX could not be initialized\n"
@@ -58,12 +59,13 @@
 # define ERROR_IMG_WALK_CONVERT "Error\n >> Could not convert xpm walk image\n"
 # define ERROR_IMG_IDLE_CONVERT "Error\n >> Could not convert xpm idle image\n"
 # define ERROR_IMG_NBR_CONVERT "Error\n >> Could not convert xpm nbr image\n"
+# define ERROR_IMG_NM_CONVERT "Error\n >> Could not convert xpm enemy image\n"
 # define WIN "\n\n  ===> YOU WIN ! <===\n\n"
 # define QUIT "\n  EXIT GAME\n"
 
 typedef struct s_bonus
 {
-	// void	*enemy;
+	void	*enemy[3];
 	void	*numbers[10];
 }	t_bonus;
 
@@ -86,6 +88,7 @@ typedef struct s_img
 	void	*c;
 	void	*e_open;
 	void	*e_closed;
+	void	*e_end[2];
 	void	*w_top;
 	void	*w_bottom;
 	void	*w_right;
@@ -116,7 +119,7 @@ typedef struct s_data
 	int			moves;
 	int			loop_count;
 	int			collectibles;
-	int			game_finish;
+	int			finish_game;
 	t_img		img;
 	t_win		win;
 	t_player	player;
@@ -133,7 +136,6 @@ typedef struct s_map
 }	t_map;
 
 /* INIT */
-// void	init_win_struct(t_data *data);
 void	init_player_walk(t_data *data);
 void	init_player_idle(t_data *data);
 void	init_img_struct(t_data *data);
@@ -144,11 +146,6 @@ void	init_struct(t_data *data, char *map_filename);
 int		keypress(int key, t_data *data);
 int		buttonpress(t_data *data);
 
-/* PLAYER */
-void	do_movement(t_data *data, int x, int y, int key);
-int		move_ok(t_data *data, int x, int y, int key);
-void	move_player(int key, t_data *data);
-
 /* UTILS */
 void	exit_error(t_data *data, char *error_message);
 int		get_width(t_data *data,char *map_filename);
@@ -158,20 +155,29 @@ int		find_py(t_data *data);
 
 void	display_map(t_data *data);
 
-/* IMAGE */
-int		display_game(t_data *data);
+/* XPM IMAGES */
 void	xpm_numbers_images(t_data *data);
+void	xpm_enemy_images(t_data *data);
 void	xpm_idle_images(t_data *data);
 void	xpm_walk_images(t_data *data);
 void	xpm_wall_images(t_data *data);
 void	xpm_images(t_data *data);
 
-/* CHOOSE IMAGE */
+/* RENDER MAP */
+void	choose_image(t_data *data, int y, int x, int i);
+int		display_game(t_data *data, int i);
+int		render_game(t_data *data);
+
+/* IMAGE WALLS */
 void	image_corner(t_data *data, int y, int x);
 void	image_top_bottom_wall(t_data *data, int y, int x);
 void	image_side_wall(t_data *data, int y, int x);
-void	image_center(t_data *data, int y, int x);
-void	choose_image(t_data *data, int y, int x);
+void	image_numbers(t_data *data);
+
+/* IMAGE CENTER */
+void	render_monster_sprites(t_data *data, int y, int x, int i);
+void	image_exit(t_data *data, int y, int x);
+void	image_center(t_data *data, int y, int x, int i);
 
 /* FREE */
 void	free_both_maps(t_data *data);
@@ -182,12 +188,19 @@ void	free_wall_img(t_data *data);
 void	free_all_exit(char	*error_message, t_data *data);
 void	free_close(t_data *data);
 
-/* ANIMATION */
-void	walk_player_left(t_data *data);
-void	walk_player_right(t_data *data);
-void	idle_player_left(t_data *data);
-void	idle_player_right(t_data *data);
-int		render_sprites(t_data *data);
+/* PLAYER */
+void	win_game(t_data *data, int x, int y);
+void	do_movement(t_data *data, int x, int y, int key);
+int		move_ok(t_data *data, int x, int y, int key);
+void	move_player(int key, t_data *data);
+
+/* PLAYER SPRITES */
+void	walk_player_left(t_data *data, int i);
+void	walk_player_right(t_data *data, int i);
+void	idle_player_left(t_data *data, int i);
+void	idle_player_right(t_data *data, int i);
+void	render_player_sprites(t_data *data, int i);
+
 
 /************************************************************/
 /**************************** MAP ***************************/

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:11:45 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/14 18:11:23 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:24:04 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ void	free_img(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->img.f);
 	if (data->img.o)
 		mlx_destroy_image(data->mlx_ptr, data->img.o);
-	printf("%p\n", data->player.p_walk[0]);
 }
 
 void	free_all_exit(char	*error_message, t_data *data)
