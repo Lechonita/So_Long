@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:11:45 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/16 16:38:34 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:53:33 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,44 +44,34 @@ void	free_maps(t_data *data)
 // 	free(data);
 // }
 
-void free_sprites_img(t_data *data)
+void	free_sprites_img(t_data *data)
 {
-	free_end_img(data);
-	free_enemy_img(data);
-	free_idle_img(data);
-	free_walk_img(data);
-	free_numbers_img(data);
-	
-	printf("TEST FREE ALL FINISH\n");
+	int	i;
+
+	i = -1;
+	while (++i < 10)
+	{
+		printf("for i = %d ==> %p\n", i, data->bonus.numbers[i]);
+		if (data->bonus.numbers[i])
+			mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[i]);
+		printf("for i = %d ==> %p\n", i, data->player.p_idle[i]);
+		if (data->player.p_idle[i])
+			mlx_destroy_image(data->mlx_ptr, data->player.p_idle[i]);
+	}
+	i = -1;
+	while (++i < 8)
+	{
+		if (data->player.p_walk[i])
+			mlx_destroy_image(data->mlx_ptr, data->player.p_walk[i]);
+	}
+	i = -1;
+	while (++i < 3)
+	{
+		if (data->bonus.enemy[i])
+			mlx_destroy_image(data->mlx_ptr, data->bonus.enemy[i]);
+	}
+	// printf("TEST FREE ALL FINISH\n");
 }
-
-// void	free_sprites_img(t_data *data)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (++i < 10)
-// 	{
-// 		printf("for i = %d ==> %p\n", i, data->bonus.numbers[i]);
-// 		if (data->bonus.numbers[i])
-// 			mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[i]);
-// 		printf("for i = %d ==> %p\n", i, data->player.p_idle[i]);
-// 		if (data->player.p_idle[i])
-// 			mlx_destroy_image(data->mlx_ptr, data->player.p_idle[i]);
-// 	}
-// 	i = -1;
-// 	while (++i < 8)
-// 	{
-// 		if (data->player.p_walk[i])
-// 			mlx_destroy_image(data->mlx_ptr, data->player.p_walk[i]);
-// 	}
-// 	i = -1;
-// 	while (++i < 3)
-// 	{
-// 		if (data->bonus.enemy[i])
-// 			mlx_destroy_image(data->mlx_ptr, data->bonus.enemy[i]);
-// 	}
-// }
 
 void	free_wall_img(t_data *data)
 {
@@ -117,6 +107,10 @@ void	free_img(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->img.e_end[0]);
 	if (data->img.e_end[1])
 		mlx_destroy_image(data->mlx_ptr, data->img.e_end[1]);
+	if (data->img.e_end[2])
+		mlx_destroy_image(data->mlx_ptr, data->img.e_end[2]);
+	if (data->img.e_end[3])
+		mlx_destroy_image(data->mlx_ptr, data->img.e_end[3]);
 	if (data->img.f)
 		mlx_destroy_image(data->mlx_ptr, data->img.f);
 	if (data->img.o)

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/16 16:38:19 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:52:34 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 # define ERROR_IMG_IDLE_CONVERT "Error\n >> Could not convert xpm idle image\n"
 # define ERROR_IMG_NBR_CONVERT "Error\n >> Could not convert xpm nbr image\n"
 # define ERROR_IMG_NM_CONVERT "Error\n >> Could not convert xpm enemy image\n"
+# define ERROR_IMG_END_CONVERT "Error\n >> Could not convert xpm end image\n"
 # define WIN "\n\n  ===> YOU WIN ! <===\n\n"
 # define LOSE "\n\n ===> YOU LOSE <===\n\n"
 # define QUIT "\n  EXIT GAME\n"
@@ -135,12 +136,6 @@ typedef struct s_map
 /* SO LONG */
 void	loop_hook(t_data *data);
 void	image_window(t_data *data);
-
-/* INIT */
-void	init_player_walk(t_data *data);
-void	init_player_idle(t_data *data);
-void	init_img_struct(t_data *data);
-void	init_data_struct(t_data *data, char *map_filename);
 void	init_struct(t_data *data, char *map_filename);
 
 /* KEYS */
@@ -157,11 +152,17 @@ int		find_py(t_data *data);
 void	display_map(t_data *data);
 
 /* XPM IMAGES */
-void	xpm_sprites_images(t_data *data);
-void	xpm_enemy_end_images(t_data *data);
-void	xpm_walk_images(t_data *data);
+void	xpm_idle_left_images(t_data *data);
+void	xpm_idle_right_images(t_data *data);
 void	xpm_wall_images(t_data *data);
+void	xpm_center_images(t_data *data);
 void	xpm_images(t_data *data);
+
+/* XPM IMAGES 2 */
+void	xpm_end_images(t_data *data);
+void	xpm_numbers_images(t_data *data);
+void	xpm_enemy_images(t_data *data);
+void	xpm_walk_images(t_data *data);
 
 /* RENDER MAP */
 void	choose_image(t_data *data, int y, int x, int i);
@@ -200,13 +201,6 @@ void	free_wall_img(t_data *data);
 void	free_img(t_data *data);
 void	free_close(t_data *data);
 void	free_all_exit(char	*error_message, t_data *data);
-
-/* FREE SPRITES */
-void	free_numbers_img(t_data *data);
-void	free_enemy_img(t_data *data);
-void	free_idle_img(t_data *data);
-void	free_walk_img(t_data *data);
-void	free_end_img(t_data *data);
 
 /************************************************************/
 /**************************** MAP ***************************/
