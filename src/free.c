@@ -6,13 +6,13 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:11:45 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/15 15:24:04 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:38:34 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	free_both_maps(t_data *data)
+void	free_maps(t_data *data)
 {
 	int i;
 
@@ -22,52 +22,70 @@ void	free_both_maps(t_data *data)
 	while (++i < data->height && data->map[i])
 	{
 	 	free(data->map[i]);
-	 	free(data->map_copy[i]);
+		if (data->map_copy[i])
+	 		free(data->map_copy[i]);
 	}
 	free(data->map);
 	free(data->map_copy);
 	free(data);
+	return ;
 }
 
-void	free_map(t_data *data)
+// void	free_map(t_data *data)
+// {
+// 	int i;
+
+// 	i = -1;
+// 	if (!data->map)
+// 		return ;
+// 	while (++i < data->height && data->map[i])
+// 		free(data->map[i]);
+// 	free(data->map);
+// 	free(data);
+// }
+
+void free_sprites_img(t_data *data)
 {
-	int i;
-
-	i = -1;
-	if (!data->map)
-		return ;
-	while (++i < data->height && data->map[i])
-		free(data->map[i]);
-	free(data->map);
-	free(data);
+	free_end_img(data);
+	free_enemy_img(data);
+	free_idle_img(data);
+	free_walk_img(data);
+	free_numbers_img(data);
+	
+	printf("TEST FREE ALL FINISH\n");
 }
 
-void	free_numbers_img(t_data *data)
-{
-	if (data->bonus.numbers[0])
-		mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[0]);
-	if (data->bonus.numbers[1])
-		mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[1]);
-	if (data->bonus.numbers[2])
-		mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[2]);
-	if (data->bonus.numbers[3])
-		mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[3]);
-	if (data->bonus.numbers[4])
-		mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[4]);
-	if (data->bonus.numbers[5])
-		mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[5]);
-	if (data->bonus.numbers[6])
-		mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[6]);
-	if (data->bonus.numbers[7])
-		mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[7]);
-	if (data->bonus.numbers[8])
-		mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[8]);
-	if (data->bonus.numbers[9])
-		mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[9]);
-}
+// void	free_sprites_img(t_data *data)
+// {
+// 	int	i;
+
+// 	i = -1;
+// 	while (++i < 10)
+// 	{
+// 		printf("for i = %d ==> %p\n", i, data->bonus.numbers[i]);
+// 		if (data->bonus.numbers[i])
+// 			mlx_destroy_image(data->mlx_ptr, data->bonus.numbers[i]);
+// 		printf("for i = %d ==> %p\n", i, data->player.p_idle[i]);
+// 		if (data->player.p_idle[i])
+// 			mlx_destroy_image(data->mlx_ptr, data->player.p_idle[i]);
+// 	}
+// 	i = -1;
+// 	while (++i < 8)
+// 	{
+// 		if (data->player.p_walk[i])
+// 			mlx_destroy_image(data->mlx_ptr, data->player.p_walk[i]);
+// 	}
+// 	i = -1;
+// 	while (++i < 3)
+// 	{
+// 		if (data->bonus.enemy[i])
+// 			mlx_destroy_image(data->mlx_ptr, data->bonus.enemy[i]);
+// 	}
+// }
 
 void	free_wall_img(t_data *data)
 {
+	printf("TEST wall\n");
 	if (data->img.w_top)
 		mlx_destroy_image(data->mlx_ptr, data->img.w_top);
 	if (data->img.w_bottom)
@@ -86,81 +104,29 @@ void	free_wall_img(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->img.w_bottomleft);
 }
 
-void	free_walk_img(t_data *data)
-{
-	if (data->player.p_walk[0])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[0]);
-	if (data->player.p_walk[1])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[1]);
-	if (data->player.p_walk[2])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[2]);
-	if (data->player.p_walk[3])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[3]);
-	if (data->player.p_walk[4])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[4]);
-	if (data->player.p_walk[5])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[5]);
-	if (data->player.p_walk[6])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[6]);
-	if (data->player.p_walk[7])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_walk[7]);
-}
-
-void	free_idle_img(t_data *data)
-{
-	if (data->player.p_idle[0])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_idle[0]);
-	if (data->player.p_idle[1])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_idle[1]);
-	if (data->player.p_idle[2])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_idle[2]);
-	if (data->player.p_idle[3])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_idle[3]);
-	if (data->player.p_idle[4])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_idle[4]);
-	if (data->player.p_idle[5])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_idle[5]);
-	if (data->player.p_idle[6])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_idle[6]);
-	if (data->player.p_idle[7])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_idle[7]);
-	if (data->player.p_idle[8])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_idle[8]);
-	if (data->player.p_idle[9])
-		mlx_destroy_image(data->mlx_ptr, data->player.p_idle[9]);
-}
-
 void	free_img(t_data *data)
 {
+	printf("TEST\n");
 	if (data->img.c)
 		mlx_destroy_image(data->mlx_ptr, data->img.c);
 	if (data->img.e_open)
 		mlx_destroy_image(data->mlx_ptr, data->img.e_open);
 	if (data->img.e_closed)
 		mlx_destroy_image(data->mlx_ptr, data->img.e_closed);
+	if (data->img.e_end[0])
+		mlx_destroy_image(data->mlx_ptr, data->img.e_end[0]);
+	if (data->img.e_end[1])
+		mlx_destroy_image(data->mlx_ptr, data->img.e_end[1]);
 	if (data->img.f)
 		mlx_destroy_image(data->mlx_ptr, data->img.f);
 	if (data->img.o)
 		mlx_destroy_image(data->mlx_ptr, data->img.o);
 }
 
-void	free_all_exit(char	*error_message, t_data *data)
-{
-	free_img(data);
-	free_idle_img(data);
-	free_walk_img(data);
-	free_wall_img(data);
-	free_numbers_img(data);
-	free_close(data);
-	exit_error(data, error_message);
-}
-
 void	free_close(t_data *data)
 {
-	if (data->map && data->map_copy)
-		free_both_maps(data);
-	else if (data->map)
-		free_map(data);
+	if (data->map)
+		free_maps(data);
 	if (data->win_ptr)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
@@ -172,4 +138,13 @@ void	free_close(t_data *data)
 		free(data->mlx_ptr);
 	}
 	free(data);
+}
+
+void	free_all_exit(char	*error_message, t_data *data)
+{
+	free_img(data);
+	free_wall_img(data);
+	free_sprites_img(data);
+	free_close(data);
+	exit_error(data, error_message);
 }

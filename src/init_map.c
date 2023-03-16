@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:35:25 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/15 15:17:47 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 14:09:37 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void	check_map_walls(t_data **data)
 		if ((*data)->map[map.y][0] != '1'
 			|| (*data)->map[map.y][ft_strlen((*data)->map[map.y]) - 1] != '1')
 			{
-				free_map(*data);
+				free_maps(*data);
 				exit_error(*data, ERROR_MAP_WALLS);
 			}
 		map.y++;
 	}
 	if (check_map_top_bottom(data))
 	{
-		free_map(*data);
+		free_maps(*data);
 		exit_error(*data, ERROR_MAP_WALLS);
 	}
 }
@@ -75,7 +75,7 @@ char	**get_map(t_data *data, char *map_filename)
 		{
 			map[i] = get_next_line(fd);
 			if (!map[i])
-				return (free_map(data), NULL);
+				return (free_maps(data), NULL);
 			if (map[i][ft_strlen(map[i]) - 1] == '\n')
 				map[i][ft_strlen(map[i]) - 1] = '\0';
 			i++;

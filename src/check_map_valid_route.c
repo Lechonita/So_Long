@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:31:40 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/14 16:46:07 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 14:11:02 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	check_map_valid_path(t_data **data)
 	flood_map(data, find_py(*data), find_px(*data));
 	if(is_path_valid(*data))
 	{
-		free_both_maps(*data);
+		free_maps(*data);
 		exit_error(*data, ERROR_INVALID_ROUTE);
 	}
 }

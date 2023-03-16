@@ -6,13 +6,13 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 11:17:18 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/15 17:05:40 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:32:51 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	xpm_numbers_images(t_data *data)
+void	xpm_sprites_images(t_data *data)
 {
 	int	width;
 	int	height;
@@ -22,14 +22,19 @@ void	xpm_numbers_images(t_data *data)
 	while (++i < 10)
 	{
 		data->bonus.numbers[i] = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->bonus.numbers[i], &width, &height);
+			data->mlx_ptr, data->bonus.numbers[i], &width, &height);
 		if (!data->bonus.numbers[i])
 			free_all_exit(ERROR_IMG_NBR_CONVERT, data);
+		data->player.p_idle[i] = mlx_xpm_file_to_image(
+			data->mlx_ptr, data->player.p_idle[i], &width, &height);
+		printf("for i = %d ==> %p\n", i, data->player.p_idle[i]);
+		if (!data->player.p_idle[i])
+			free_all_exit(ERROR_IMG_IDLE_CONVERT, data);
 	}
 	return ;
 }
 
-void	xpm_enemy_images(t_data *data)
+void	xpm_enemy_end_images(t_data *data)
 {
 	int	width;
 	int	height;
@@ -39,27 +44,20 @@ void	xpm_enemy_images(t_data *data)
 	while (++i < 3)
 	{
 		data->bonus.enemy[i] = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->bonus.enemy[i], &width, &height);
+			data->mlx_ptr, data->bonus.enemy[i], &width, &height);
 		if (!data->bonus.enemy[i])
 			free_all_exit(ERROR_IMG_NM_CONVERT, data);
 	}
-	return ;
-}
-
-void	xpm_idle_images(t_data *data)
-{
-	int	width;
-	int	height;
-	int	i;
-
 	i = -1;
-	while (++i < 10)
+	while (++i < 4)
 	{
-		data->player.p_idle[i] = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->player.p_idle[i], &width, &height);
-		if (!data->player.p_idle[i])
-			free_all_exit(ERROR_IMG_IDLE_CONVERT, data);
+		data->img.e_end[i] = mlx_xpm_file_to_image(
+			data->mlx_ptr, data->img.e_end[i], &width, &height);
+		printf("for i = %d ==> %p (end)\n", i, data->img.e_end[i]);
+		if (!data->img.e_end[i])
+			free_all_exit(ERROR_IMG_CONVERT, data);
 	}
+	return ;
 }
 
 void	xpm_walk_images(t_data *data)
@@ -116,10 +114,6 @@ void	xpm_images(t_data *data)
 		data->mlx_ptr, data->img.e_open, &width, &height);
 	data->img.e_closed = mlx_xpm_file_to_image(
 		data->mlx_ptr, data->img.e_closed, &width, &height);
-	data->img.e_end[0] = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->img.e_end[0], &width, &height);
-	data->img.e_end[1] = mlx_xpm_file_to_image(
-		data->mlx_ptr, data->img.e_end[1], &width, &height);
 	data->img.f = mlx_xpm_file_to_image(
 		data->mlx_ptr, data->img.f, &width, &height);
 	data->img.o = mlx_xpm_file_to_image(
@@ -129,7 +123,6 @@ void	xpm_images(t_data *data)
 		free_all_exit(ERROR_IMG_CONVERT, data);
 	xpm_wall_images(data);
 	xpm_walk_images(data);
-	xpm_idle_images(data);
-	xpm_enemy_images(data);
-	xpm_numbers_images(data);
+	xpm_enemy_end_images(data);
+	xpm_sprites_images(data);
 }

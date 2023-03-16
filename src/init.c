@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:47:09 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/15 17:04:02 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:02:24 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	init_img_struct(t_data *data)
 	data->img.e_closed = "./images_xpm/map/door_closed.xpm";
 	data->img.e_end[0] = "./images_xpm/map/door_end_right.xpm";
 	data->img.e_end[1] = "./images_xpm/map/door_end_left.xpm";
+	data->img.e_end[2] = "./images_xpm/map/you_win.xpm";
+	data->img.e_end[3] = "./images_xpm/map/you_lose.xpm";
 	data->img.w_top = "./images_xpm/map/top_wall.xpm";
 	data->img.w_bottom = "./images_xpm/map/bottom_wall.xpm";
 	data->img.w_right = "./images_xpm/map/right_wall.xpm";

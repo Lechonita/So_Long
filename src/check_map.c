@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:33:06 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/13 11:47:48 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 14:09:37 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	check_map_shape(t_data **data)
 	{
 		if (ft_strlen((*data)->map[map.y]) != (*data)->width)
 		{
-			free_map(*data);
+			free_maps(*data);
 			exit_error(*data, ERROR_MAP_SHAPE);
 		}
 	}

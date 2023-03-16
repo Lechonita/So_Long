@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/03/15 17:20:53 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/03/16 15:44:50 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC = so_long.c \
 		check_map.c \
 		check_map_valid_route.c \
 		free.c \
+		free_sprites.c \
 		keys.c \
 		xpm_images.c \
 		utils.c \

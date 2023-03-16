@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 17:18:47 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/15 17:31:11 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:20:37 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,12 @@ void	image_exit(t_data *data, int y, int x)
 			mlx_put_image_to_window(
 				data->mlx_ptr, data->win_ptr, data->img.e_open, x * PXL, y * PXL);
 		else if (data->finish_game == 1 && data->player.direction == 0)
+		{
 			mlx_put_image_to_window(
-			data->mlx_ptr, data->win_ptr, data->img.e_end[0], x * PXL, y * PXL);
+				data->mlx_ptr, data->win_ptr, data->img.e_end[0], x * PXL, y * PXL);
+			mlx_put_image_to_window(
+				data->mlx_ptr, data->win_ptr, data->img.e_end[2], (data->width / 2 - 64) * PXL, (data->height / 2 - 64) * PXL);
+		}
 		else if (data->finish_game == 1 && data->player.direction == 1)
 			mlx_put_image_to_window(
 			data->mlx_ptr, data->win_ptr, data->img.e_end[1], x * PXL, y * PXL);

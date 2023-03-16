@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 17:10:33 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/15 17:15:38 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:18:54 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,5 @@ void	render_player_sprites(t_data *data, int i)
 		walk_player_right(data, i);
 	else if (data->player.p_animate == 1 && data->player.direction == 1)
 		walk_player_left(data, i);
+	return ;
 }

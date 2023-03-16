@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   choose_image.c                                     :+:      :+:    :+:   */
+/*   image_walls.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:27:31 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/15 17:19:07 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 12:25:09 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	image_corner(t_data *data, int y, int x)
 {
+	// printf("data width = %d\n", data->width);
 	if ((y == 0 && x == 0))
 		mlx_put_image_to_window(
 			data->mlx_ptr, data->win_ptr, data->img.w_topleft, x * PXL, y * PXL);
@@ -57,11 +58,10 @@ void	image_numbers(t_data *data)
 	h = data->moves / 100;
 	t = (data->moves % 100) / 10;
 	u = data->moves % 10;
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->bonus.numbers[u], ((data->width * PXL) - NBR_PXL), 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->bonus.numbers[t], ((data->width * PXL) - (NBR_PXL * 2)), 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->bonus.numbers[h], ((data->width * PXL) - (NBR_PXL * 3)), 0);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+				data->bonus.numbers[u], ((data->width * PXL) - NBR_PXL), 0);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+				data->bonus.numbers[t], ((data->width * PXL) - (NBR_PXL * 2)), 0);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+				data->bonus.numbers[h], ((data->width * PXL) - (NBR_PXL * 3)), 0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/15 17:31:21 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:38:19 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 
 # define PXL 64
 # define NBR_PXL 16
-# define RATE 80
+# define RATE 120
 
 # define ERROR_ARGC "Error\n >> Not enough arguments to launch program\n"
 # define ERROR_INIT_MLX "Error\n >> MLX could not be initialized\n"
@@ -61,6 +61,7 @@
 # define ERROR_IMG_NBR_CONVERT "Error\n >> Could not convert xpm nbr image\n"
 # define ERROR_IMG_NM_CONVERT "Error\n >> Could not convert xpm enemy image\n"
 # define WIN "\n\n  ===> YOU WIN ! <===\n\n"
+# define LOSE "\n\n ===> YOU LOSE <===\n\n"
 # define QUIT "\n  EXIT GAME\n"
 
 typedef struct s_bonus
@@ -81,14 +82,10 @@ typedef struct s_player
 
 typedef struct s_img
 {
-	// char	*addr;
-	// int		bpp; /* bits per pixel */
-	// int		line_len;
-	// int		endian;
 	void	*c;
 	void	*e_open;
 	void	*e_closed;
-	void	*e_end[2];
+	void	*e_end[4];
 	void	*w_top;
 	void	*w_bottom;
 	void	*w_right;
@@ -135,6 +132,10 @@ typedef struct s_map
 	int		p;
 }	t_map;
 
+/* SO LONG */
+void	loop_hook(t_data *data);
+void	image_window(t_data *data);
+
 /* INIT */
 void	init_player_walk(t_data *data);
 void	init_player_idle(t_data *data);
@@ -156,9 +157,8 @@ int		find_py(t_data *data);
 void	display_map(t_data *data);
 
 /* XPM IMAGES */
-void	xpm_numbers_images(t_data *data);
-void	xpm_enemy_images(t_data *data);
-void	xpm_idle_images(t_data *data);
+void	xpm_sprites_images(t_data *data);
+void	xpm_enemy_end_images(t_data *data);
 void	xpm_walk_images(t_data *data);
 void	xpm_wall_images(t_data *data);
 void	xpm_images(t_data *data);
@@ -179,17 +179,9 @@ void	render_monster_sprites(t_data *data, int y, int x, int i);
 void	image_exit(t_data *data, int y, int x);
 void	image_center(t_data *data, int y, int x, int i);
 
-/* FREE */
-void	free_both_maps(t_data *data);
-void	free_map(t_data *data);
-void	free_numbers_img(t_data *data);
-void	free_img(t_data *data);
-void	free_wall_img(t_data *data);
-void	free_all_exit(char	*error_message, t_data *data);
-void	free_close(t_data *data);
-
 /* PLAYER */
 void	win_game(t_data *data, int x, int y);
+void	player_death(t_data *data, int x, int y);
 void	do_movement(t_data *data, int x, int y, int key);
 int		move_ok(t_data *data, int x, int y, int key);
 void	move_player(int key, t_data *data);
@@ -201,6 +193,20 @@ void	idle_player_left(t_data *data, int i);
 void	idle_player_right(t_data *data, int i);
 void	render_player_sprites(t_data *data, int i);
 
+/* FREE */
+void	free_maps(t_data *data);
+void	free_sprites_img(t_data *data);
+void	free_wall_img(t_data *data);
+void	free_img(t_data *data);
+void	free_close(t_data *data);
+void	free_all_exit(char	*error_message, t_data *data);
+
+/* FREE SPRITES */
+void	free_numbers_img(t_data *data);
+void	free_enemy_img(t_data *data);
+void	free_idle_img(t_data *data);
+void	free_walk_img(t_data *data);
+void	free_end_img(t_data *data);
 
 /************************************************************/
 /**************************** MAP ***************************/
