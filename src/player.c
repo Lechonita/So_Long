@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:33:34 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:11:00 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:20:12 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	move_ok(t_data *data, int x, int y, int key)
 	return (0);
 }
 
-void 	move_player(int key, t_data *data)
+void	move_player(int key, t_data *data)
 {
 	int	x;
 	int	y;

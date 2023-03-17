@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:33:06 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 14:29:18 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:16:30 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void	count_collectibles(t_data *data)
 {
 	t_map	map;
-	
+
 	map.y = -1;
 	while (++map.y < data->height)
 	{
 		map.x = -1;
-		while(++map.x < data->width)
+		while (++map.x < data->width)
 		{
 			if (data->map[map.y][map.x] == 'C')
 				data->collectibles++;
@@ -63,7 +63,7 @@ void	check_map_shape(t_data **data)
 	t_map	map;
 
 	map.y = -1;
-	while(++map.y < (*data)->height)
+	while (++map.y < (*data)->height)
 	{
 		if (ft_strlen((*data)->map[map.y]) != (*data)->width)
 			exit_error(*data, ERROR_MAP_SHAPE);

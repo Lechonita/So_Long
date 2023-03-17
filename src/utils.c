@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 14:31:43 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 17:36:16 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:39:35 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exit_error(t_data *data, char *error_message)
 	exit (0);
 }
 
-int	get_width(t_data *data,char *map_filename)
+int	get_width(t_data *data, char *map_filename)
 {
 	int		fd;
 	int		width;
@@ -36,10 +36,10 @@ int	get_width(t_data *data,char *map_filename)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	return(width);
+	return (width);
 }
 
-int	get_height(t_data *data,char *map_filename)
+int	get_height(t_data *data, char *map_filename)
 {
 	int		fd;
 	int		height;
@@ -57,7 +57,7 @@ int	get_height(t_data *data,char *map_filename)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	return(height);
+	return (height);
 }
 
 int	find_px(t_data *data)
@@ -73,7 +73,7 @@ int	find_px(t_data *data)
 			if (data->map[map.y][map.x] == 'P')
 			{
 				data->player.pos_x = map.x;
-				return (map.x) ;
+				return (map.x);
 			}
 		}
 	}
@@ -93,7 +93,7 @@ int	find_py(t_data *data)
 			if (data->map[map.y][map.x] == 'P')
 			{
 				data->player.pos_y = map.y;
-				return (map.y) ;
+				return (map.y);
 			}
 		}
 	}

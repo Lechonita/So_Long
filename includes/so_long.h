@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:11:21 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:39:54 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ typedef struct s_bonus
 
 typedef struct s_player
 {
-	int 	pos_x;
-	int 	pos_y;
-	int 	direction;
+	int		pos_x;
+	int		pos_y;
+	int		direction;
 	int		p_animate;
 	int		p_win;
 	int		p_dead;
@@ -109,7 +109,7 @@ typedef struct s_win
 {
 	int		x;
 	int		y;
-} t_win;
+}	t_win;
 
 typedef struct s_data
 {
@@ -150,8 +150,8 @@ int		buttonpress(t_data *data);
 
 /* UTILS */
 void	exit_error(t_data *data, char *error_message);
-int		get_width(t_data *data,char *map_filename);
-int		get_height(t_data *data,char *map_filename);
+int		get_width(t_data *data, char *map_filename);
+int		get_height(t_data *data, char *map_filename);
 int		find_px(t_data *data);
 int		find_py(t_data *data);
 

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:55 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 14:47:11 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:20:55 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	loop_hook(t_data *data)
 
 void	image_window(t_data *data)
 {
-	data->win_ptr = mlx_new_window(data->mlx_ptr, data->win.x, data->win.y, TITLE);
+	data->win_ptr = mlx_new_window(data->mlx_ptr,
+			data->win.x, data->win.y, TITLE);
 	if (!data->win_ptr)
 		exit_error(data, ERROR_INIT_WIN);
 	xpm_images(data);

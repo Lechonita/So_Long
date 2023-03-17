@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 17:10:33 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/16 15:18:54 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:19:57 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	walk_player_left(t_data *data, int i)
 {
-	int j;
+	int	j;
 
 	if (i < (RATE / 4))
 		j = 0;
@@ -25,7 +25,8 @@ void	walk_player_left(t_data *data, int i)
 	else
 		j = 3;
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-		data->player.p_walk[j + 4], data->player.pos_x * PXL, data->player.pos_y * PXL);
+		data->player.p_walk[j + 4], data->player.pos_x * PXL,
+		data->player.pos_y * PXL);
 	return ;
 }
 
@@ -42,7 +43,8 @@ void	walk_player_right(t_data *data, int i)
 	else
 		j = 3;
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-		data->player.p_walk[j], data->player.pos_x * PXL, data->player.pos_y * PXL);
+		data->player.p_walk[j], data->player.pos_x * PXL,
+		data->player.pos_y * PXL);
 	return ;
 }
 
@@ -61,13 +63,14 @@ void	idle_player_left(t_data *data, int i)
 	else
 		j = 4;
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-		data->player.p_idle[j + 5], data->player.pos_x * PXL, data->player.pos_y * PXL);
+		data->player.p_idle[j + 5], data->player.pos_x * PXL,
+		data->player.pos_y * PXL);
 	return ;
 }
 
 void	idle_player_right(t_data *data, int i)
 {
-	int j;
+	int	j;
 
 	if (i < (RATE / 5))
 		j = 0;
@@ -80,7 +83,8 @@ void	idle_player_right(t_data *data, int i)
 	else
 		j = 4;
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-		data->player.p_idle[j], data->player.pos_x * PXL, data->player.pos_y * PXL);
+		data->player.p_idle[j], data->player.pos_x * PXL,
+		data->player.pos_y * PXL);
 	return ;
 }
 

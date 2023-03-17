@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:31:40 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 13:49:04 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:39:08 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	flood_map(t_data **data, int y, int x)
 		(*data)->map_copy[y][x - 1] = 'x';
 		flood_map(data, y, (x - 1));
 	}
-	else
-		flood_y(data, y, x);
+	flood_y(data, y, x);
 }
 
 void	flood_y(t_data **data, int y, int x)
@@ -81,11 +80,11 @@ void	copy_map(t_data **data)
 	char	*copy_lines;
 	int		i;
 
-	i = 0;
+	i = -1;
 	copy_lines = ft_calloc(1, 1);
 	if (!copy_lines)
 		return ;
-	while  (i < (*data)->height)
+	while (++i < (*data)->height)
 	{
 		line = ft_strjoin((*data)->map[i], "\n");
 		if (!line)
@@ -94,7 +93,6 @@ void	copy_map(t_data **data)
 		free(line);
 		if (!copy_lines)
 			return ;
-		i++;
 	}
 	if (copy_lines[0] == '\0')
 	{
@@ -109,7 +107,7 @@ void	check_map_valid_path(t_data **data)
 {
 	copy_map(data);
 	if (!(*data)->map_copy)
- 		exit_error(*data, ERROR_MAP_COPY);
+		exit_error(*data, ERROR_MAP_COPY);
 	flood_map(data, find_py(*data), find_px(*data));
 	if (is_path_valid(*data))
 		exit_error(*data, ERROR_INVALID_ROUTE);
