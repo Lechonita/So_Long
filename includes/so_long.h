@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/16 17:52:34 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:11:21 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define ERROR_MAP_FD "Error\n >> Map file could not be opened\n"
 # define ERROR_MAP_EMPTY "Error\n >> Map file is empty\n"
 # define ERROR_MAP_SHAPE "Error\n >> Map shape incorrect\n"
+# define ERROR_MAP_SIZE "Error\n >> Map size too big\n"
 # define ERROR_MAP_COPY "Error\n >> Map could not be copied\n"
 # define ERROR_INVALID_ROUTE "Error\n >> This map has no possible path\n"
 # define ERROR_IMG_CONVERT "Error\n >> Could not convert xpm non-wall image\n"
@@ -61,7 +62,9 @@
 # define ERROR_IMG_NBR_CONVERT "Error\n >> Could not convert xpm nbr image\n"
 # define ERROR_IMG_NM_CONVERT "Error\n >> Could not convert xpm enemy image\n"
 # define ERROR_IMG_END_CONVERT "Error\n >> Could not convert xpm end image\n"
+# define ERROR_IMG_LOSE_CONVERT "Error\n >> Could not convert xpm lose image\n"
 # define WIN "\n\n  ===> YOU WIN ! <===\n\n"
+# define DEAD "\n\n ===> WASTED <===\n\n"
 # define LOSE "\n\n ===> YOU LOSE <===\n\n"
 # define QUIT "\n  EXIT GAME\n"
 
@@ -69,6 +72,7 @@ typedef struct s_bonus
 {
 	void	*enemy[3];
 	void	*numbers[10];
+	void	*lose[3];
 }	t_bonus;
 
 typedef struct s_player
@@ -77,6 +81,8 @@ typedef struct s_player
 	int 	pos_y;
 	int 	direction;
 	int		p_animate;
+	int		p_win;
+	int		p_dead;
 	void	*p_idle[10];
 	void	*p_walk[8];
 }	t_player;
@@ -86,7 +92,7 @@ typedef struct s_img
 	void	*c;
 	void	*e_open;
 	void	*e_closed;
-	void	*e_end[4];
+	void	*e_end[3];
 	void	*w_top;
 	void	*w_bottom;
 	void	*w_right;
@@ -149,8 +155,6 @@ int		get_height(t_data *data,char *map_filename);
 int		find_px(t_data *data);
 int		find_py(t_data *data);
 
-void	display_map(t_data *data);
-
 /* XPM IMAGES */
 void	xpm_idle_left_images(t_data *data);
 void	xpm_idle_right_images(t_data *data);
@@ -159,6 +163,7 @@ void	xpm_center_images(t_data *data);
 void	xpm_images(t_data *data);
 
 /* XPM IMAGES 2 */
+void	xpm_lose_images(t_data *data);
 void	xpm_end_images(t_data *data);
 void	xpm_numbers_images(t_data *data);
 void	xpm_enemy_images(t_data *data);
@@ -170,22 +175,26 @@ int		display_game(t_data *data, int i);
 int		render_game(t_data *data);
 
 /* IMAGE WALLS */
+void	image_numbers(t_data *data);
 void	image_corner(t_data *data, int y, int x);
 void	image_top_bottom_wall(t_data *data, int y, int x);
 void	image_side_wall(t_data *data, int y, int x);
-void	image_numbers(t_data *data);
 
 /* IMAGE CENTER */
+void	render_lose_sprites(t_data *data, int i);
 void	render_monster_sprites(t_data *data, int y, int x, int i);
 void	image_exit(t_data *data, int y, int x);
 void	image_center(t_data *data, int y, int x, int i);
 
 /* PLAYER */
-void	win_game(t_data *data, int x, int y);
 void	player_death(t_data *data, int x, int y);
 void	do_movement(t_data *data, int x, int y, int key);
 int		move_ok(t_data *data, int x, int y, int key);
 void	move_player(int key, t_data *data);
+
+/* WIN LOSE */
+void	lose_game(t_data *data);
+void	win_game(t_data *data, int x, int y);
 
 /* PLAYER SPRITES */
 void	walk_player_left(t_data *data, int i);
@@ -196,11 +205,14 @@ void	render_player_sprites(t_data *data, int i);
 
 /* FREE */
 void	free_maps(t_data *data);
+void	free_close(t_data *data);
+void	free_all_exit(char	*error_message, t_data *data);
+
+/* FREE IMG */
+void	free_lose(t_data *data);
 void	free_sprites_img(t_data *data);
 void	free_wall_img(t_data *data);
 void	free_img(t_data *data);
-void	free_close(t_data *data);
-void	free_all_exit(char	*error_message, t_data *data);
 
 /************************************************************/
 /**************************** MAP ***************************/
@@ -214,7 +226,6 @@ void	map_filename(t_data *data, char *argv);
 
 /* CHECK MAP */
 void	count_collectibles(t_data *data);
-void	map_error_elements(t_data *data);
 void	check_map_chars(t_data **data);
 void	check_map_shape(t_data **data);
 void	check_map(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:33:06 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/16 14:09:37 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:29:18 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,7 @@ void	count_collectibles(t_data *data)
 				data->collectibles++;
 		}
 	}
-}
-
-void	map_error_elements(t_data *data)
-{
-	int	y;
-
-	y = -1;
-	while (++y < data->height && data->map[y])
-		free(data->map[y]);
-	free(data->map);
-	free(data);
-	exit_error(data, ERROR_MAP_ELEMENTS);
+	return ;
 }
 
 void	check_map_chars(t_data **data)
@@ -62,7 +51,7 @@ void	check_map_chars(t_data **data)
 			else if ((*data)->map[map.y][map.x] != '1'
 				&& (*data)->map[map.y][map.x] != '0'
 				&& (*data)->map[map.y][map.x] != 'M')
-				map_error_elements(*data);
+				exit_error(*data, ERROR_MAP_ELEMENTS);
 		}
 	}
 	if (!map.c || map.e != 1 || map.p != 1)
@@ -77,11 +66,12 @@ void	check_map_shape(t_data **data)
 	while(++map.y < (*data)->height)
 	{
 		if (ft_strlen((*data)->map[map.y]) != (*data)->width)
-		{
-			free_maps(*data);
 			exit_error(*data, ERROR_MAP_SHAPE);
-		}
 	}
+	if ((*data)->height > 21)
+		exit_error(*data, ERROR_MAP_SIZE);
+	if ((*data)->width > 39)
+		exit_error(*data, ERROR_MAP_SIZE);
 }
 
 void	check_map(t_data *data)

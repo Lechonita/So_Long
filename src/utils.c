@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 14:31:43 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/14 16:45:32 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 17:36:16 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,42 +98,4 @@ int	find_py(t_data *data)
 		}
 	}
 	return (0);
-}
-
-/* TO BE REMOVED */
-
-// void	display_map(t_data *data)
-// {
-// 	int		y;
-// 	int		x;
-
-// 	y = -1;
-// 	while (++y < data->height)
-// 	{
-// 		x = -1;
-// 		while (++x < data->width)
-// 		{
-// 			// printf("  y = %d     ", y);
-// 			printf("%c", data->map[y][x]);
-// 		}
-// 		printf("\n");
-// 	}
-// }
-
-void	display_map(t_data *data)
-{
-	int		y;
-	int		x;
-
-	y = -1;
-	while (++y < data->height)
-	{
-		x = -1;
-		while (++x < data->width)
-		{
-			// printf("  y = %d     ", y);
-			printf("%c", data->map_copy[y][x]);
-		}
-		printf("\n");
-	}
 }

@@ -6,22 +6,11 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:33:34 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/16 15:06:43 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 18:11:00 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	win_game(t_data *data, int x, int y)
-{
-	data->finish_game = 1;
-	data->map[data->player.pos_y][data->player.pos_x] = '0';
-	data->map[y][x] = 'E';
-	data->moves += 1;
-	ft_printf("Move #%d\n", data->moves);
-	ft_printf(WIN);
-	return ;
-}
 
 void	player_death(t_data *data, int x, int y)
 {
@@ -30,14 +19,13 @@ void	player_death(t_data *data, int x, int y)
 	data->map[y][x] = 'M';
 	data->moves += 1;
 	ft_printf("Move #%d\n", data->moves);
-	ft_printf(LOSE);
+	ft_printf(DEAD);
+	data->player.p_dead = 1;
 	return ;
 }
 
 void	do_movement(t_data *data, int x, int y, int key)
 {
-	printf("playr pos x = %d\n", data->player.pos_x);
-	printf("playr pos y = %d\n", data->player.pos_y);
 	(void)key;
 	data->map[data->player.pos_y][data->player.pos_x] = '0';
 	data->map[y][x] = 'P';
@@ -52,7 +40,8 @@ int	move_ok(t_data *data, int x, int y, int key)
 {
 	if (data->finish_game == 0)
 	{
-		printf("data->map[y][x] = %c\n", data->map[y][x]);
+		if (data->moves >= 999)
+			lose_game(data);
 		if (data->map[y][x] == 'C')
 			data->collectibles--;
 		if (data->map[y][x] == '1')

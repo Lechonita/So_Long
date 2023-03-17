@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:35:25 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/16 14:09:37 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 12:39:25 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,15 @@ void	check_map_walls(t_data **data)
 {
 	t_map	map;
 
-	map.y = 0;
-	while (map.y < (*data)->height)
+	map.y = -1;
+	while (++map.y < (*data)->height)
 	{
 		if ((*data)->map[map.y][0] != '1'
 			|| (*data)->map[map.y][ft_strlen((*data)->map[map.y]) - 1] != '1')
-			{
-				free_maps(*data);
-				exit_error(*data, ERROR_MAP_WALLS);
-			}
-		map.y++;
+			exit_error(*data, ERROR_MAP_WALLS);
 	}
 	if (check_map_top_bottom(data))
-	{
-		free_maps(*data);
 		exit_error(*data, ERROR_MAP_WALLS);
-	}
 }
 
 int	check_map_top_bottom(t_data **data)

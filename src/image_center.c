@@ -6,11 +6,28 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 17:18:47 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/16 15:20:37 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 17:58:51 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	render_lose_sprites(t_data *data, int i)
+{
+	int		j;
+
+	if (i < (RATE / 3))
+		j = 0;
+	else if (i < 2 * (RATE / 3))
+		j = 1;
+	else
+		j = 2;
+	printf("J = %d\n", j);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+		data->bonus.lose[j], ((data->width / 2) * PXL) - 1500,
+		((data->height / 2) * PXL) - 750);
+	return ;
+}
 
 void	render_monster_sprites(t_data *data, int y, int x, int i)
 {
@@ -41,8 +58,6 @@ void	image_exit(t_data *data, int y, int x)
 		{
 			mlx_put_image_to_window(
 				data->mlx_ptr, data->win_ptr, data->img.e_end[0], x * PXL, y * PXL);
-			mlx_put_image_to_window(
-				data->mlx_ptr, data->win_ptr, data->img.e_end[2], (data->width / 2 - 64) * PXL, (data->height / 2 - 64) * PXL);
 		}
 		else if (data->finish_game == 1 && data->player.direction == 1)
 			mlx_put_image_to_window(

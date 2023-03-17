@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:54:59 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/16 12:24:51 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 17:54:43 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,14 @@ int	render_game(t_data *data)
 
 	if (i++ <= RATE)
 	{
-		display_game(data, i);
+		if (data->player.p_win == 1)
+			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+				data->img.e_end[2], ((data->width / 2) * PXL) - 1500,
+				((data->height / 2) * PXL) - 750);
+		if (data->player.p_dead == 0 && data->player.p_win == 0)
+			display_game(data, i);
+		else if (data->player.p_dead == 1)
+			render_lose_sprites(data, i);
 		if (i == RATE)
 		{
 			i = 0;

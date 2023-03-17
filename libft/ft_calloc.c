@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 19:00:40 by jrouillo          #+#    #+#             */
-/*   Updated: 2022/11/23 10:32:04 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:47:45 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	if (nmemb != 0 && size > ((SIZE_MAX) - 1) / nmemb)
 		return (NULL);
 	ptr = (void *)malloc(nmemb * size);
-	if (!ptr)
-		return (NULL);
-	ft_bzero(ptr, nmemb * size);
-	return (ptr);
+	if (ptr)
+	{	
+		ft_bzero(ptr, nmemb * size);
+		return (ptr);
+	}
+	return (NULL);
 }

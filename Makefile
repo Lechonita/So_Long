@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/03/16 17:59:56 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/03/17 18:10:26 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC = so_long.c \
 		check_map.c \
 		check_map_valid_route.c \
 		free.c \
-		free_sprites.c \
+		free_img.c \
 		keys.c \
 		xpm_images.c \
 		xpm_images2.c \
@@ -36,7 +36,8 @@ SRC = so_long.c \
 		player.c \
 		render_map.c \
 		image_center.c \
-		player_sprites.c
+		player_sprites.c \
+		win_lose.c
 SRC2 = $(addprefix $(SRC_PATH), $(SRC))
 
 
