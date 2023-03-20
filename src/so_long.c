@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:55 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:20:55 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:46:58 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ void	init_struct(t_data *data, char *map_filename)
 	if (!data->mlx_ptr)
 		exit_error(data, ERROR_INIT_MLX);
 	data->height = get_height(data, map_filename);
+	if (data->height == 0)
+		exit_error(data, ERROR_MAP_EMPTY);
 	data->width = get_width(data, map_filename);
+	if (data->width == 0)
+		exit_error(data, ERROR_MAP_EMPTY);
 	data->win.y = data->height * PXL;
 	data->win.x = data->width * PXL;
 }
@@ -44,6 +48,7 @@ void	init_struct(t_data *data, char *map_filename)
 int	main(int argc, char **argv)
 {
 	t_data	*data;
+	char	*buffer;
 
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
@@ -52,7 +57,9 @@ int	main(int argc, char **argv)
 		exit_error (data, ERROR_ARGC);
 	map_filename(data, argv[1]);
 	init_struct(data, argv[1]);
-	data->map = get_map(data, argv[1]);
+	buffer = read_mapfile(data, argv[1]);
+	data->map = get_map(data, buffer);
+	free(buffer);
 	if (!data->map)
 		exit_error(data, ERROR_MAP_EMPTY);
 	check_map(data);

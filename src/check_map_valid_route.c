@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:31:40 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:39:08 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:09:05 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	copy_map(t_data **data)
 	{
 		line = ft_strjoin((*data)->map[i], "\n");
 		if (!line)
-			return ;
+			return (free(copy_lines));
 		copy_lines = ft_free_strjoin(copy_lines, line);
 		free(line);
 		if (!copy_lines)

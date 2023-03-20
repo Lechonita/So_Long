@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 14:31:43 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:39:35 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/20 12:52:38 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ int	get_width(t_data *data, char *map_filename)
 	if (fd < 0)
 		exit_error(data, ERROR_MAP_FD);
 	line = get_next_line(fd);
+	if (!line)
+	{
+		close(fd);
+		exit_error(data, ERROR_MAP_EMPTY);
+	}
 	width = ft_strlen(line) - 1;
 	while (line)
 	{

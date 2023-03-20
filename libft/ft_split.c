@@ -6,11 +6,24 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 13:55:27 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/16 17:42:08 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:08:10 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+void	free_strs(char **strs)
+{
+	size_t	i;
+
+	if (strs)
+	{
+		i = -1;
+		while (strs[++i])
+			free((void *)strs[i]);
+		free(strs);
+	}
+}
 
 int	word_count(char const *s, char c)
 {
@@ -46,49 +59,45 @@ int	word_len(const char *s, char c)
 	return (len);
 }
 
-char	*word_generator(const char *s, char c)
+char	*word_generator(const char **s, char c)
 {
-	size_t		i;
-	size_t		j;
 	size_t		len;
 	char		*word;
 
-	i = 0;
-	j = 0;
-	len = word_len(s + i, c);
+	while (**s == c)
+		(*s)++;
+	len = word_len(*s, c);
 	word = (char *)malloc(sizeof(char) * (len + 1));
-	if (!word)
-		return (NULL);
-	while (s[i] && s[i] != c)
-		word[j++] = s[i++];
-	word[j] = '\0';
+	if (word)
+		ft_strlcpy(word, *s, len + 1);
+	*s += len;
 	return (word);
 }
 
 char	**ft_split(char const *s, char c)
 {
 	size_t		i;
-	size_t		j;
 	size_t		counter;
 	char		**res;
 
-	i = 0;
-	j = 0;
+	i = -1;
 	if (!s)
 		return (NULL);
 	counter = word_count(s, c);
 	res = (char **)malloc(sizeof(char *) * (counter + 1));
-	if (!res)
-		return (NULL);
-	while (s[i] && j < counter)
+	if (res)
 	{
-		while (s[i] && s[i] == c)
-			i++;
-		if (s[i] && s[i] != c)
-			res[j++] = word_generator(s + i, c);
-		while (s[i] && s[i] != c)
-			i++;
+		res[counter] = NULL;
+		while (++i < counter)
+		{
+			res[i] = word_generator(&s, c);
+			if (!res[i])
+			{
+				free_strs(res);
+				res = NULL;
+				break ;
+			}
+		}
 	}
-	res[j] = 0;
 	return (res);
 }

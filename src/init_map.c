@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:35:25 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:19:07 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:34:01 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,34 +49,31 @@ int	check_map_top_bottom(t_data **data)
 	return (0);
 }
 
-char	**get_map(t_data *data, char *map_filename)
-{
-	int		fd;
-	char	**map;
-	int		i;
+// char	**get_map(t_data *data, char *map_filename)
+// {
+// 	int		fd;
+// 	char	**map;
+// 	int		i;
 
-	if (data->height == 0)
-		exit_error(data, ERROR_MAP_EMPTY);
-	fd = open(map_filename, O_RDWR);
-	if (fd < 0)
-		exit_error(data, ERROR_MAP_FD);
-	map = malloc(sizeof(char *) * (data->height + 1));
-	if (map)
-	{	
-		i = 0;
-		while (i < data->height)
-		{
-			map[i] = get_next_line(fd);
-			if (!map[i])
-				return (free_maps(data), NULL);
-			if (map[i][ft_strlen(map[i]) - 1] == '\n')
-				map[i][ft_strlen(map[i]) - 1] = '\0';
-			i++;
-		}
-		close(fd);
-	}
-	return (map);
-}
+// 	fd = open(map_filename, O_RDWR);
+// 	if (fd < 0)
+// 		exit_error(data, ERROR_MAP_FD);
+// 	map = malloc(sizeof(char *) * (data->height + 1));
+// 	if (map)
+// 	{
+// 		i = -1;
+// 		while (++i < data->height)
+// 		{
+// 			map[i] = get_next_line(fd);
+// 			if (!map[i])
+// 				return (free_maps(data), free(map), NULL);
+// 			if (map[i][ft_strlen(map[i]) - 1] == '\n')
+// 				map[i][ft_strlen(map[i]) - 1] = '\0';
+// 		}
+// 		close(fd);
+// 	}
+// 	return (map);
+// }
 
 void	map_filename(t_data *data, char *argv)
 {

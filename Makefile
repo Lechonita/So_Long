@@ -6,7 +6,7 @@
 #    By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 15:00:52 by jrouillo          #+#    #+#              #
-#    Updated: 2023/03/17 18:10:26 by jrouillo         ###   ########.fr        #
+#    Updated: 2023/03/20 16:30:48 by jrouillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ SRC = so_long.c \
 		render_map.c \
 		image_center.c \
 		player_sprites.c \
-		win_lose.c
+		win_lose.c \
+		buffer.c
 SRC2 = $(addprefix $(SRC_PATH), $(SRC))
 
 
@@ -50,7 +51,8 @@ OBJ2 = $(addprefix $(OBJ_PATH), $(OBJ))
 ####################### FLAGS #######################
 
 CCF  = clang $(FLAGS)
-FLAGS = -Wall -Werror -Wextra -fsanitize=address,undefined -g2
+FLAGS = -Wall -Werror -Wextra -g
+# -fsanitize=address,undefined -g2
 
 
 ###################### INCLUDE ######################
@@ -127,8 +129,10 @@ $(NAME): $(OBJ2)
 	@echo "$(_GREEN)\n✅ So_long compiled\n${_END}"
 	@echo "$(_GREEN)\n🆗🕺 READY 🕺🆗\n${_END}"
 
+bonus: all $(OBJ_PATH) $(LIBFT) $(PRINTF) $(MLX) $(NAME)
+
 malloc_test: $(OBJ_PATH) $(OBJ2) $(LIBFT) $(PRINTF) $(MLX) $(NAME)
-	$(CCF) -fsanitize=undefined -rdynamic -o $@ ${OBJ2} $(LIBFT) $(PRINTF) $(INC) -L. -lmallocator
+	$(CCF) -fsanitize=undefined -rdynamic -o $@ ${OBJ2} $(LIBFT) $(PRINTF) $(MLX) $(MLX_FLAGS) $(INC) -L. -lmallocator
 
 clean:
 	@make clean -sC $(LIBFT_PATH)
@@ -148,4 +152,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:25:05 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/02/13 16:47:06 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:08:30 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	str = (char *)malloc(sizeof(char) * (len1 + len2) + 1);
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, s1, len1 + 1);
-	ft_strlcat(str + (len1), s2, len2 + 1);
+	if (str)
+	{
+		ft_strlcpy(str, s1, len1 + 1);
+		ft_strlcat(str + (len1), s2, len2 + 1);
+	}
 	return (str);
 }
 

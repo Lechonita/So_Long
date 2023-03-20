@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:39:54 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:48:18 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define ERROR_INIT_WIN "Error\n >> Window could not be initialized\n"
 # define ERROR_NO_MAP "Error\n >> No map has been selected\n"
 # define ERROR_MAP_FILE "Error\n >> Map file type is incorrect\n"
-# define ERROR_MAP_ELEMENTS "Error\n >> Wrong map element found (!01CEP)\n"
+# define ERROR_MAP_ELEMENTS "Error\n >> Wrong map element found (!01CEPM)\n"
 # define ERROR_MAP_ECP "Error\n >> Wrong quantity of Start, Exit and/or Item\n"
 # define ERROR_MAP_WALLS "Error\n >> Map walls are incomplete\n"
 # define ERROR_MAP_FD "Error\n >> Map file could not be opened\n"
@@ -144,6 +144,11 @@ void	loop_hook(t_data *data);
 void	image_window(t_data *data);
 void	init_struct(t_data *data, char *map_filename);
 
+/* BUFFER */
+int		get_buffer_size(t_data *data, char *map_filename);
+char	*read_mapfile(t_data *data, char *map_filename);
+char	**get_map(t_data *data, char *buffer);
+
 /* KEYS */
 int		keypress(int key, t_data *data);
 int		buttonpress(t_data *data);
@@ -221,7 +226,7 @@ void	free_img(t_data *data);
 /* INIT MAP */
 void	check_map_walls(t_data **data);
 int		check_map_top_bottom(t_data **data);
-char	**get_map(t_data *data, char *map_filename);
+// char	**get_map(t_data *data, char *map_filename);
 void	map_filename(t_data *data, char *argv);
 
 /* CHECK MAP */
