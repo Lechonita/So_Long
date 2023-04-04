@@ -6,27 +6,11 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 17:44:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:39:45 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:23:57 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	xpm_lose_images(t_data *data)
-{
-	int		w;
-	int		h;
-
-	data->bonus.lose[0] = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/game/dead_1.xpm", &w, &h);
-	data->bonus.lose[1] = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/game/dead_2.xpm", &w, &h);
-	data->bonus.lose[2] = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/game/dead_3.xpm", &w, &h);
-	if (!data->bonus.lose[0] || !data->bonus.lose[1]
-		|| !data->bonus.lose[2])
-		free_all_exit(ERROR_IMG_LOSE_CONVERT, data);
-}
 
 void	xpm_end_images(t_data *data)
 {
@@ -42,9 +26,39 @@ void	xpm_end_images(t_data *data)
 	if (!data->img.e_end[0] || !data->img.e_end[1]
 		|| !data->img.e_end[2])
 		free_all_exit(ERROR_IMG_END_CONVERT, data);
+	data->bonus.lose[0] = mlx_xpm_file_to_image(
+			data->mlx_ptr, "./images_xpm/game/dead_1.xpm", &w, &h);
+	data->bonus.lose[1] = mlx_xpm_file_to_image(
+			data->mlx_ptr, "./images_xpm/game/dead_2.xpm", &w, &h);
+	data->bonus.lose[2] = mlx_xpm_file_to_image(
+			data->mlx_ptr, "./images_xpm/game/dead_3.xpm", &w, &h);
+	if (!data->bonus.lose[0] || !data->bonus.lose[1]
+		|| !data->bonus.lose[2])
+		free_all_exit(ERROR_IMG_LOSE_CONVERT, data);
 }
 
-void	xpm_numbers_images(t_data *data)
+void	xpm_numbers2_images(t_data *data)
+{
+	int		w;
+	int		h;
+
+	data->bonus.numbers[5] = mlx_xpm_file_to_image(
+			data->mlx_ptr, "./images_xpm/numbers/five.xpm", &w, &h);
+	data->bonus.numbers[6] = mlx_xpm_file_to_image(
+			data->mlx_ptr, "./images_xpm/numbers/six.xpm", &w, &h);
+	data->bonus.numbers[7] = mlx_xpm_file_to_image(
+			data->mlx_ptr, "./images_xpm/numbers/seven.xpm", &w, &h);
+	data->bonus.numbers[8] = mlx_xpm_file_to_image(
+			data->mlx_ptr, "./images_xpm/numbers/eight.xpm", &w, &h);
+	data->bonus.numbers[9] = mlx_xpm_file_to_image(
+			data->mlx_ptr, "./images_xpm/numbers/nine.xpm", &w, &h);
+	if (!data->bonus.numbers[5]
+		|| !data->bonus.numbers[6] || !data->bonus.numbers[7]
+		|| !data->bonus.numbers[8] || !data->bonus.numbers[9])
+		free_all_exit(ERROR_IMG_NBR_CONVERT, data);
+}
+
+void	xpm_numbers1_images(t_data *data)
 {
 	int		w;
 	int		h;
@@ -59,21 +73,9 @@ void	xpm_numbers_images(t_data *data)
 			data->mlx_ptr, "./images_xpm/numbers/three.xpm", &w, &h);
 	data->bonus.numbers[4] = mlx_xpm_file_to_image(
 			data->mlx_ptr, "./images_xpm/numbers/four.xpm", &w, &h);
-	data->bonus.numbers[5] = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/numbers/five.xpm", &w, &h);
-	data->bonus.numbers[6] = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/numbers/six.xpm", &w, &h);
-	data->bonus.numbers[7] = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/numbers/seven.xpm", &w, &h);
-	data->bonus.numbers[8] = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/numbers/eight.xpm", &w, &h);
-	data->bonus.numbers[9] = mlx_xpm_file_to_image(
-			data->mlx_ptr, "./images_xpm/numbers/nine.xpm", &w, &h);
 	if (!data->bonus.numbers[0] || !data->bonus.numbers[1]
 		|| !data->bonus.numbers[2] || !data->bonus.numbers[3]
-		|| !data->bonus.numbers[4] || !data->bonus.numbers[5]
-		|| !data->bonus.numbers[6] || !data->bonus.numbers[7]
-		|| !data->bonus.numbers[8] || !data->bonus.numbers[9])
+		|| !data->bonus.numbers[4])
 		free_all_exit(ERROR_IMG_NBR_CONVERT, data);
 }
 

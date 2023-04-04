@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:33:34 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:20:12 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:24:48 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,16 @@ void	player_death(t_data *data, int x, int y)
 	ft_printf("Move #%d\n", data->moves);
 	ft_printf(DEAD);
 	data->player.p_dead = 1;
-	return ;
 }
 
-void	do_movement(t_data *data, int x, int y, int key)
+void	do_movement(t_data *data, int x, int y)
 {
-	(void)key;
 	data->map[data->player.pos_y][data->player.pos_x] = '0';
 	data->map[y][x] = 'P';
 	data->player.pos_x = x;
 	data->player.pos_y = y;
 	data->moves += 1;
 	ft_printf("Move #%d\n", data->moves);
-	return ;
 }
 
 int	move_ok(t_data *data, int x, int y, int key)
@@ -83,6 +80,6 @@ void	move_player(int key, t_data *data)
 	}
 	data->player.p_animate = 1;
 	if (!move_ok(data, x, y, key) && data->finish_game == 0)
-		do_movement(data, x, y, key);
+		do_movement(data, x, y);
 	return ;
 }

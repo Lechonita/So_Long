@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 18:06:54 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:16:38 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:01:11 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	free_sprites_img(t_data *data)
 	{
 		if (data->bonus.enemy[i])
 			mlx_destroy_image(data->mlx_ptr, data->bonus.enemy[i]);
+		if (data->img.e_end[i])
+			mlx_destroy_image(data->mlx_ptr, data->img.e_end[i]);
 	}
 }
 
@@ -78,12 +80,6 @@ void	free_img(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->img.e_open);
 	if (data->img.e_closed)
 		mlx_destroy_image(data->mlx_ptr, data->img.e_closed);
-	if (data->img.e_end[0])
-		mlx_destroy_image(data->mlx_ptr, data->img.e_end[0]);
-	if (data->img.e_end[1])
-		mlx_destroy_image(data->mlx_ptr, data->img.e_end[1]);
-	if (data->img.e_end[2])
-		mlx_destroy_image(data->mlx_ptr, data->img.e_end[2]);
 	if (data->img.f)
 		mlx_destroy_image(data->mlx_ptr, data->img.f);
 	if (data->img.o)

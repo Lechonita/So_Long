@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 11:17:18 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:23:34 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:23:06 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	xpm_idle_left_images(t_data *data)
 			data->mlx_ptr, "./images_xpm/player/p_idle_left_4.xpm", &w, &h);
 	data->player.p_idle[9] = mlx_xpm_file_to_image(
 			data->mlx_ptr, "./images_xpm/player/p_idle_left_5.xpm", &w, &h);
-	if (!data->player.p_idle[5]	|| !data->player.p_idle[6]
+	if (!data->player.p_idle[5] || !data->player.p_idle[6]
 		|| !data->player.p_idle[7] || !data->player.p_idle[8]
 		|| !data->player.p_idle[9])
 		free_all_exit(ERROR_IMG_IDLE_CONVERT, data);
@@ -109,7 +109,7 @@ void	xpm_images(t_data *data)
 	xpm_idle_left_images(data);
 	xpm_walk_images(data);
 	xpm_enemy_images(data);
-	xpm_numbers_images(data);
+	xpm_numbers1_images(data);
+	xpm_numbers2_images(data);
 	xpm_end_images(data);
-	xpm_lose_images(data);
 }

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:55 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/20 17:46:58 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:25:24 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	init_struct(t_data *data, char *map_filename)
 int	main(int argc, char **argv)
 {
 	t_data	*data;
-	char	*buffer;
 
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
@@ -57,12 +56,11 @@ int	main(int argc, char **argv)
 		exit_error (data, ERROR_ARGC);
 	map_filename(data, argv[1]);
 	init_struct(data, argv[1]);
-	buffer = read_mapfile(data, argv[1]);
-	data->map = get_map(data, buffer);
-	free(buffer);
+	data->map = get_map(data, argv[1]);
 	if (!data->map)
 		exit_error(data, ERROR_MAP_EMPTY);
 	check_map(data);
 	image_window(data);
 	loop_hook(data);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 17:18:47 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/17 18:17:58 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:22:40 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ void	render_lose_sprites(t_data *data, int i)
 		j = 1;
 	else
 		j = 2;
-	printf("J = %d\n", j);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 		data->bonus.lose[j], ((data->width / 2) * PXL) - 1500,
 		((data->height / 2) * PXL) - 750);
-	return ;
 }
 
 void	render_monster_sprites(t_data *data, int y, int x, int i)
@@ -41,7 +39,6 @@ void	render_monster_sprites(t_data *data, int y, int x, int i)
 		j = 2;
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 		data->bonus.enemy[j], x * PXL, y * PXL);
-	return ;
 }
 
 void	image_exit(t_data *data, int y, int x)

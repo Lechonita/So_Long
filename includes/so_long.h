@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 15:00:57 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/20 17:48:18 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:23:58 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,6 @@ void	loop_hook(t_data *data);
 void	image_window(t_data *data);
 void	init_struct(t_data *data, char *map_filename);
 
-/* BUFFER */
-int		get_buffer_size(t_data *data, char *map_filename);
-char	*read_mapfile(t_data *data, char *map_filename);
-char	**get_map(t_data *data, char *buffer);
-
 /* KEYS */
 int		keypress(int key, t_data *data);
 int		buttonpress(t_data *data);
@@ -168,13 +163,14 @@ void	xpm_center_images(t_data *data);
 void	xpm_images(t_data *data);
 
 /* XPM IMAGES 2 */
-void	xpm_lose_images(t_data *data);
 void	xpm_end_images(t_data *data);
-void	xpm_numbers_images(t_data *data);
+void	xpm_numbers2_images(t_data *data);
+void	xpm_numbers1_images(t_data *data);
 void	xpm_enemy_images(t_data *data);
 void	xpm_walk_images(t_data *data);
 
 /* RENDER MAP */
+void	first_column(t_data *data, int y, int x);
 void	choose_image(t_data *data, int y, int x, int i);
 int		display_game(t_data *data, int i);
 int		render_game(t_data *data);
@@ -191,22 +187,22 @@ void	render_monster_sprites(t_data *data, int y, int x, int i);
 void	image_exit(t_data *data, int y, int x);
 void	image_center(t_data *data, int y, int x, int i);
 
-/* PLAYER */
-void	player_death(t_data *data, int x, int y);
-void	do_movement(t_data *data, int x, int y, int key);
-int		move_ok(t_data *data, int x, int y, int key);
-void	move_player(int key, t_data *data);
-
-/* WIN LOSE */
-void	lose_game(t_data *data);
-void	win_game(t_data *data, int x, int y);
-
 /* PLAYER SPRITES */
 void	walk_player_left(t_data *data, int i);
 void	walk_player_right(t_data *data, int i);
 void	idle_player_left(t_data *data, int i);
 void	idle_player_right(t_data *data, int i);
 void	render_player_sprites(t_data *data, int i);
+
+/* PLAYER */
+void	player_death(t_data *data, int x, int y);
+void	do_movement(t_data *data, int x, int y);
+int		move_ok(t_data *data, int x, int y, int key);
+void	move_player(int key, t_data *data);
+
+/* WIN LOSE */
+void	lose_game(t_data *data);
+void	win_game(t_data *data, int x, int y);
 
 /* FREE */
 void	free_maps(t_data *data);
@@ -226,7 +222,7 @@ void	free_img(t_data *data);
 /* INIT MAP */
 void	check_map_walls(t_data **data);
 int		check_map_top_bottom(t_data **data);
-// char	**get_map(t_data *data, char *map_filename);
+char	**get_map(t_data *data, char *map_filename);
 void	map_filename(t_data *data, char *argv);
 
 /* CHECK MAP */

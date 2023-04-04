@@ -6,7 +6,7 @@
 /*   By: jrouillo <jrouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 12:11:45 by jrouillo          #+#    #+#             */
-/*   Updated: 2023/03/20 16:02:03 by jrouillo         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:02:40 by jrouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ void	free_all_exit(char	*error_message, t_data *data)
 	free_sprites_img(data);
 	free_lose(data);
 	free_close(data);
-	write (1, error_message, ft_strlen(error_message));
+	write(1, error_message, ft_strlen(error_message));
 	exit (0);
 }
