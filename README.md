@@ -8,4 +8,4 @@ School 42 Project that consists in developing a 2D videogame with a Player that 
 
 
 
-<img src="![simplescreenrecorder-2023-04-05_15 03 58](https://user-images.githubusercontent.com/113359133/230090702-41d87ad4-7618-4327-8124-e0ed78d8d50e.gif)" width="300" height="180"/>
+<img src="https://user-images.githubusercontent.com/113359133/230090702-41d87ad4-7618-4327-8124-e0ed78d8d50e.gif" width="300" height="180"/>
