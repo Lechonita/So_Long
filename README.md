@@ -1,5 +1,11 @@
 # So_Long
 
 
-https://user-images.githubusercontent.com/113359133/230086815-bac3eaa9-23de-4fb5-b4cf-f5df3d06318e.mp4
+School 42 Project that consists in developing a 2D videogame with a Player that needs to collect all the Collectibles and reach the Exit point with the least moves possible.
+
+
+
+
+
+https://user-images.githubusercontent.com/113359133/230089041-000cbad0-177f-491f-834b-119c9b50e6eb.mp4
 
