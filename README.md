@@ -19,4 +19,11 @@ ESC | Close game window
 AZERTY keyboard also accepted (zqsd).
 
 
-The Exit cross at the top right corner of the window must also close the game's windiw.
+The Exit cross at the top right corner of the window must also close the game's window.
+
+
+# Status
+
+Bonus included.
+
+Validated 125%
