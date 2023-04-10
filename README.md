@@ -9,6 +9,7 @@ School 42 Project that consists in developing a 2D videogame with a Player that 
 # Keys
 
 Key | Effect
+| :------: | :----:
 w | Jump or Move player up
 a | Move player left
 s | Move player down
